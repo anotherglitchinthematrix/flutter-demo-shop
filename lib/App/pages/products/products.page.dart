@@ -20,7 +20,7 @@ class ProductsPage extends StatelessWidget {
         ),
         itemCount: dummyProducts.length,
         itemBuilder: (context, index) {
-          return ProductItem();
+          return ProductItem(dummyProducts[index]);
         },
       ),
     );
