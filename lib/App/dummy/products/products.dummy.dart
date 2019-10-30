@@ -1,6 +1,6 @@
 import 'package:course_008/App/models/index.dart';
 
-final List<Product> DUMMY_PRODUCTS = [
+final List<Product> dummyProducts = [
   Product(
     id: 'p1',
     title: 'Red Shirt',
