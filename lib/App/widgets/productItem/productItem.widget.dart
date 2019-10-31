@@ -1,6 +1,7 @@
-import 'package:course_008/App/pages/index.dart';
 import 'package:flutter/material.dart';
+
 import 'package:course_008/App/models/index.dart';
+import 'package:course_008/App/pages/index.dart';
 
 class ProductItem extends StatelessWidget {
   final Product product;
