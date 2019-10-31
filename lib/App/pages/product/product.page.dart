@@ -1,16 +1,24 @@
-import 'package:course_008/App/models/index.dart';
 import 'package:flutter/material.dart';
 
-class ProductPage extends StatelessWidget {
-  final Product product;
+import 'package:course_008/App/models/index.dart';
 
-  ProductPage(this.product);
+/// An interface to extract the data easily passed by the namedRoute.
+class ProductPageArgument {
+  final Product product;
+  ProductPageArgument({this.product});
+}
+
+class ProductPage extends StatelessWidget {
+  static const routeName = 'product';
 
   @override
   Widget build(BuildContext context) {
+    final argument =
+        ModalRoute.of(context).settings.arguments as ProductPageArgument;
+
     return Scaffold(
       appBar: AppBar(
-        title: Text(product.title),
+        title: Text(argument.product.title),
       ),
     );
   }

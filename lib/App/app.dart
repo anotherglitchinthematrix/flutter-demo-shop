@@ -12,6 +12,9 @@ class App extends StatelessWidget {
         primarySwatch: Colors.blueGrey,
       ),
       home: ProductsPage(),
+      routes: {
+        ProductPage.routeName: (context) => ProductPage(),
+      },
     );
   }
 }

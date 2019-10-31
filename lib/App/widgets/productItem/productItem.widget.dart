@@ -11,8 +11,7 @@ class ProductItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        borderRadius:
-            BorderRadius.circular(8), // might be 9 to match with ClipRRect
+        borderRadius: BorderRadius.circular(8),
         border: Border.all(
           color: Theme.of(context).primaryColorDark.withAlpha(96),
           width: 1,
@@ -22,10 +21,11 @@ class ProductItem extends StatelessWidget {
         borderRadius: BorderRadius.circular(8),
         child: GestureDetector(
           onTap: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(builder: (_) {
-                return ProductPage(product);
-              }),
+            Navigator.of(context).pushNamed(
+              ProductPage.routeName,
+              arguments: ProductPageArgument(
+                product: product,
+              ),
             );
           },
           child: GridTile(
