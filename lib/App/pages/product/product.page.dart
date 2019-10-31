@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
-
 import 'package:course_008/App/models/index.dart';
 
 /// An interface to extract the data easily passed by the namedRoute.
 class ProductPageArgument {
   final Product product;
-  ProductPageArgument({this.product});
+
+  ProductPageArgument({
+    this.product,
+  });
 }
 
 class ProductPage extends StatelessWidget {
@@ -13,8 +15,7 @@ class ProductPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final argument =
-        ModalRoute.of(context).settings.arguments as ProductPageArgument;
+    final ProductPageArgument argument = ModalRoute.of(context).settings.arguments;
 
     return Scaffold(
       appBar: AppBar(

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:course_008/App/models/index.dart';
 
 class ProductsProvider with ChangeNotifier {

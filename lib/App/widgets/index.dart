@@ -1,1 +1,1 @@
-export 'productItem/productItem.widget.dart';
+export 'product/index.dart';

@@ -1,25 +1,27 @@
 import 'package:flutter/material.dart';
-
 import 'package:course_008/App/models/index.dart';
 import 'package:course_008/App/pages/index.dart';
 
 class ProductItem extends StatelessWidget {
-  final Product product;
-
   ProductItem(this.product);
+
+  final Product product;
 
   @override
   Widget build(BuildContext context) {
+    /// Radius for decoration and clipRRect.
+    var radius = BorderRadius.circular(8);
+
     return Container(
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: radius,
         border: Border.all(
           color: Theme.of(context).primaryColorDark.withAlpha(96),
           width: 1,
         ),
       ),
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: radius,
         child: GestureDetector(
           onTap: () {
             Navigator.of(context).pushNamed(
@@ -52,8 +54,7 @@ class ProductItem extends StatelessWidget {
                 ),
               ),
               child: GridTileBar(
-                backgroundColor:
-                    Theme.of(context).primaryColorDark.withAlpha(48),
+                backgroundColor: Theme.of(context).primaryColorDark.withAlpha(48),
                 title: Text(
                   product.title,
                   overflow: TextOverflow.fade,
