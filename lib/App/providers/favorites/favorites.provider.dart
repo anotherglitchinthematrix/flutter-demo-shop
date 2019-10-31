@@ -9,7 +9,7 @@ class FavoritesProvider with ChangeNotifier {
     return _favorites.contains(id);
   }
 
-  void toggleFavorite(String id) {
+  void toggle(String id) {
     if (this.isFavorite(id)) {
       this._remove(id);
     } else {

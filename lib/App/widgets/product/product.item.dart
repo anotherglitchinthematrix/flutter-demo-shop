@@ -45,7 +45,7 @@ class ProductItem extends StatelessWidget {
               child: IconButton(
                 color: Colors.pink,
                 icon: Icon(favorites.isFavorite(product.id) ? Icons.favorite : Icons.favorite_border),
-                onPressed: () => favorites.toggleFavorite(product.id),
+                onPressed: () => favorites.toggle(product.id),
               ),
             ),
             footer: Container(
