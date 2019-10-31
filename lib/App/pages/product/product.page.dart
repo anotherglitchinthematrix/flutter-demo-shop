@@ -20,15 +20,15 @@ class ProductPage extends StatelessWidget {
     final ProductPageArgument argument = ModalRoute.of(context).settings.arguments;
     final Product product = argument.product;
 
-    final favorites = Provider.of<FavoritesProvider>(context);
-
     return Scaffold(
       appBar: AppBar(
         title: Text(product.title),
         actions: <Widget>[
-          IconButton(
-            icon: Icon(favorites.isFavorite(product.id) ? Icons.favorite : Icons.favorite_border),
-            onPressed: () => favorites.toggle(product.id),
+          Consumer<FavoritesProvider>(
+            builder: (_, favorites, child) => IconButton(
+              icon: Icon(favorites.isFavorite(product.id) ? Icons.favorite : Icons.favorite_border),
+              onPressed: () => favorites.toggle(product.id),
+            ),
           ),
         ],
       ),
