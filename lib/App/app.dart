@@ -6,7 +6,10 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-        primarySwatch: Colors.indigo,
+        fontFamily: 'Inter',
+        // primarySwatch: Colors.brown,
+        // primarySwatch: Colors.grey,
+        primarySwatch: Colors.blueGrey,
       ),
       home: ProductsPage(),
     );

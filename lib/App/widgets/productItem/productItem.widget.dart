@@ -10,9 +10,10 @@ class ProductItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8),
+        borderRadius:
+            BorderRadius.circular(8), // might be 9 to match with ClipRRect
         border: Border.all(
-          color: Theme.of(context).primaryColorDark,
+          color: Theme.of(context).primaryColorDark.withAlpha(96),
           width: 1,
         ),
       ),
@@ -35,7 +36,7 @@ class ProductItem extends StatelessWidget {
             decoration: BoxDecoration(
               border: Border(
                 top: BorderSide(
-                  color: Theme.of(context).primaryColor.withAlpha(128),
+                  color: Theme.of(context).primaryColor.withAlpha(96),
                   width: 1,
                 ),
               ),
@@ -47,6 +48,7 @@ class ProductItem extends StatelessWidget {
                 overflow: TextOverflow.fade,
                 style: TextStyle(
                   color: Theme.of(context).primaryColorDark,
+                  fontFamily: 'Inter',
                   fontSize: 14,
                   fontWeight: FontWeight.w500,
                 ),
