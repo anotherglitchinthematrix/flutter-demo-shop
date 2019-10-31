@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:course_008/App/models/index.dart';
+import 'package:course_008/App/providers/index.dart';
 import 'package:course_008/App/pages/index.dart';
 
 class ProductItem extends StatelessWidget {
@@ -9,6 +11,8 @@ class ProductItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var favorites = Provider.of<FavoritesProvider>(context);
+
     /// Radius for decoration and clipRRect.
     var radius = BorderRadius.circular(8);
 
@@ -40,8 +44,8 @@ class ProductItem extends StatelessWidget {
               alignment: Alignment.topRight,
               child: IconButton(
                 color: Colors.pink,
-                icon: Icon(Icons.favorite_border),
-                onPressed: () {},
+                icon: Icon(favorites.isFavorite(product.id) ? Icons.favorite : Icons.favorite_border),
+                onPressed: () => favorites.toggleFavorite(product.id),
               ),
             ),
             footer: Container(

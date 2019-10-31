@@ -1,16 +1,21 @@
 import 'package:flutter/widgets.dart';
 
 class FavoritesProvider with ChangeNotifier {
-  final List<String> _favorites = [];
+  final List<String> _favorites = ['p1'];
 
   List<String> get favorites => _favorites;
 
-  void toggle(String id) {
-    if (_favorites.contains(id)) {
+  bool isFavorite(String id) {
+    return _favorites.contains(id);
+  }
+
+  void toggleFavorite(String id) {
+    if (this.isFavorite(id)) {
       this._remove(id);
     } else {
       this._add(id);
     }
+
     notifyListeners();
   }
 
