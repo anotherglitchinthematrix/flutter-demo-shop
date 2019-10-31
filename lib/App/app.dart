@@ -6,8 +6,15 @@ import 'package:course_008/App/providers/index.dart';
 class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      builder: (context) => ProductsProvider(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<ProductsProvider>.value(
+          value: ProductsProvider(),
+        ),
+        ChangeNotifierProvider<FavoritesProvider>.value(
+          value: FavoritesProvider(),
+        ),
+      ],
       child: MaterialApp(
         theme: ThemeData(
           fontFamily: 'Inter',
