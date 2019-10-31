@@ -11,8 +11,6 @@ class ProductItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var favorites = Provider.of<FavoritesProvider>(context);
-
     /// Radius for decoration and clipRRect.
     var radius = BorderRadius.circular(8);
 
@@ -42,10 +40,12 @@ class ProductItem extends StatelessWidget {
             ),
             header: Align(
               alignment: Alignment.topRight,
-              child: IconButton(
-                color: Colors.pink,
-                icon: Icon(favorites.isFavorite(product.id) ? Icons.favorite : Icons.favorite_border),
-                onPressed: () => favorites.toggle(product.id),
+              child: Consumer<FavoritesProvider>(
+                builder: (_, favorites, child) => IconButton(
+                  color: Colors.pink,
+                  icon: Icon(favorites.isFavorite(product.id) ? Icons.favorite : Icons.favorite_border),
+                  onPressed: () => favorites.toggle(product.id),
+                ),
               ),
             ),
             footer: Container(
