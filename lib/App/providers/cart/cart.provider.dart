@@ -42,4 +42,9 @@ class CartProvider with ChangeNotifier {
     item.quantity++;
     notifyListeners();
   }
+
+  void removeFromCart(CartItem item) {
+    _list.remove(item);
+    notifyListeners();
+  }
 }
