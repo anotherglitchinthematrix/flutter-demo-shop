@@ -78,7 +78,7 @@ class ProductGridItem extends StatelessWidget {
                   color: Theme.of(context).primaryColor,
                   icon: Icon(Icons.add_shopping_cart),
                   onPressed: () {
-                    cart.addToCart(product.id);
+                    cart.addToCart(product);
                     Scaffold.of(context).showSnackBar(
                       SnackBar(
                         content: Text('${product.title} Has been added to cart!'),

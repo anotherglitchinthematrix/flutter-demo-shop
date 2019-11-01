@@ -1,5 +1,5 @@
-import 'package:course_008/App/providers/index.dart';
 import 'package:flutter/material.dart';
+import 'package:course_008/App/providers/index.dart';
 
 class CartListItem extends StatelessWidget {
   CartListItem(this.item);
@@ -8,6 +8,15 @@ class CartListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(item.quantity.toString());
+    return Card(
+      margin: EdgeInsets.symmetric(
+        horizontal: 8,
+        vertical: 4,
+      ),
+      child: Padding(
+        padding: EdgeInsets.all(8),
+        child: Text(item.quantity.toString()),
+      ),
+    );
   }
 }

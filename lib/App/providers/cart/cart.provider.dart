@@ -1,14 +1,15 @@
+import 'package:course_008/App/models/index.dart';
 import 'package:flutter/material.dart';
 
 class CartItem {
   CartItem({
     @required this.id,
-    @required this.productId,
+    @required this.product,
     this.quantity = 0,
   });
 
   final String id;
-  final String productId;
+  final Product product;
   int quantity;
 }
 
@@ -19,16 +20,16 @@ class CartProvider with ChangeNotifier {
 
   String get count => this._list.length.toString();
 
-  void addToCart(String productId) {
+  void addToCart(Product product) {
     /// try to find the item in the cart,
     /// if it's present return the item.
     /// if it's not present create and return the item.
     CartItem item = _list.firstWhere(
-      (item) => item.productId == productId,
+      (item) => item.product == product,
       orElse: () {
         CartItem _item = CartItem(
           id: DateTime.now().toString(),
-          productId: productId,
+          product: product,
         );
 
         _list.add(_item);
