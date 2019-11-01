@@ -9,6 +9,15 @@ class ProductsPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Shop App'),
+        actions: <Widget>[
+          BadgeButton(
+            icon: Icons.shopping_cart,
+            text: '9',
+            onPressed: () {
+              print('test');
+            },
+          ),
+        ],
       ),
       body: ProductsGrid(),
     );

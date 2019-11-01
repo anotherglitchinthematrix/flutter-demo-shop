@@ -14,6 +14,11 @@ class ProductItem extends StatelessWidget {
     /// Radius for decoration and clipRRect.
     var radius = BorderRadius.circular(8);
 
+    /// Using a Consumer<T> wrapping the add to cart button is more reactive.
+    /// But in this example we will not use.
+    /// Do not re-build the widget.
+    var cart = Provider.of<CartProvider>(context, listen: false);
+
     return Container(
       decoration: BoxDecoration(
         borderRadius: radius,
@@ -69,14 +74,10 @@ class ProductItem extends StatelessWidget {
                     fontWeight: FontWeight.w500,
                   ),
                 ),
-                trailing: Consumer<CartProvider>(
-                  builder: (_, cart, child) {
-                    return IconButton(
-                      color: Theme.of(context).primaryColor,
-                      icon: Icon(Icons.shopping_cart),
-                      onPressed: () => cart.addToCart(product.id),
-                    );
-                  },
+                trailing: IconButton(
+                  color: Theme.of(context).primaryColor,
+                  icon: Icon(Icons.add_shopping_cart),
+                  onPressed: () => cart.addToCart(product.id),
                 ),
               ),
             ),
