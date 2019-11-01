@@ -10,11 +10,14 @@ class CartList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: ListView.builder(
-        itemCount: cart.list.length,
-        itemBuilder: (context, index) {
-          return CartListItem(cart.list[index]);
-        },
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8),
+        child: ListView.builder(
+          itemCount: cart.list.length,
+          itemBuilder: (context, index) {
+            return CartListItem(cart.list[index]);
+          },
+        ),
       ),
     );
   }

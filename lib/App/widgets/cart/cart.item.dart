@@ -12,6 +12,7 @@ class CartListItem extends StatelessWidget {
     var product = item.product;
     return Card(
       // color: Colors.blue,
+      margin: EdgeInsets.only(bottom: 8),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(4),
         child: Dismissible(

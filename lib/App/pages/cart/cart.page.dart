@@ -24,9 +24,6 @@ class CartPage extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(
-              height: 8,
-            ),
             CartList(cart),
           ],
         ),
