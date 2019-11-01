@@ -13,7 +13,12 @@ class CartListItem extends StatelessWidget {
     var product = item.product;
     return GestureDetector(
       onTap: () {
-        Navigator.of(context).pushNamed(ProductPage.routeName, arguments: ProductPageArgument(product: item.product));
+        Navigator.of(context).pushNamed(
+          ProductPage.routeName,
+          arguments: ProductPageArgument(
+            product: item.product,
+          ),
+        );
       },
       child: Card(
         // color: Colors.blue,
@@ -26,12 +31,12 @@ class CartListItem extends StatelessWidget {
             resizeDuration: Duration(milliseconds: 200),
             background: Container(
               alignment: Alignment.centerRight,
-              color: Colors.red,
+              color: Colors.red.withAlpha(24),
               child: Padding(
                 padding: const EdgeInsets.only(right: 16),
                 child: Icon(
                   Icons.delete,
-                  color: Colors.white,
+                  color: Colors.red,
                 ),
               ),
             ),
@@ -44,9 +49,12 @@ class CartListItem extends StatelessWidget {
               // dense: true,
               leading: ClipRRect(
                 borderRadius: BorderRadius.circular(4),
-                child: Image.network(
-                  product.imageURL,
-                  fit: BoxFit.cover,
+                child: Container(
+                  width: 48,
+                  child: Image.network(
+                    product.imageURL,
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
               title: Text(

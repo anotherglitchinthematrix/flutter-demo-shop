@@ -69,7 +69,7 @@ class ProductPage extends StatelessWidget {
                 height: 500,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(4),
-                  color: Theme.of(context).primaryColorLight,
+                  color: Theme.of(context).primaryColor.withAlpha(36),
                 ),
               ),
             ],

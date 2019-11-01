@@ -6,7 +6,8 @@ final List<Product> dummyProducts = [
     title: 'Product 1',
     description: 'Product 1 description',
     price: 9.99,
-    imageURL: 'https://dummyimage.com/2:3x480/FFF',
+    imageURL:
+        'https://images.pexels.com/photos/133472/pexels-photo-133472.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
   ),
   Product(
     id: 'p2',
@@ -34,7 +35,6 @@ final List<Product> dummyProducts = [
     title: 'Product 5',
     description: 'Product 5 description',
     price: 49.99,
-    imageURL:
-        'https://images.pexels.com/photos/2727736/pexels-photo-2727736.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
+    imageURL: 'https://dummyimage.com/2:3x480/FFF',
   ),
 ];
