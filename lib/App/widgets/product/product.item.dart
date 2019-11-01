@@ -47,6 +47,8 @@ class ProductGridItem extends StatelessWidget {
               alignment: Alignment.topRight,
               child: Consumer<FavoritesProvider>(
                 builder: (_, favorites, child) => IconButton(
+                  splashColor: Colors.transparent,
+                  highlightColor: Colors.transparent,
                   color: Colors.pink,
                   icon: Icon(favorites.isFavorite(product.id) ? Icons.favorite : Icons.favorite_border),
                   onPressed: () => favorites.toggle(product.id),
@@ -54,40 +56,38 @@ class ProductGridItem extends StatelessWidget {
               ),
             ),
             footer: Container(
-              decoration: BoxDecoration(
-                border: Border(
-                  top: BorderSide(
-                    color: Theme.of(context).primaryColor.withAlpha(96),
-                    width: 1,
+              margin: EdgeInsets.all(4),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(4),
+                child: GridTileBar(
+                  backgroundColor: Theme.of(context).primaryColorDark.withAlpha(48),
+                  title: Text(
+                    product.title,
+                    overflow: TextOverflow.fade,
+                    style: TextStyle(
+                      color: Theme.of(context).primaryColorDark,
+                      fontFamily: 'Inter',
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
-                ),
-              ),
-              child: GridTileBar(
-                backgroundColor: Theme.of(context).primaryColorDark.withAlpha(48),
-                title: Text(
-                  product.title,
-                  overflow: TextOverflow.fade,
-                  style: TextStyle(
-                    color: Theme.of(context).primaryColorDark,
-                    fontFamily: 'Inter',
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
+                  trailing: IconButton(
+                    highlightColor: Colors.transparent,
+                    splashColor: Colors.transparent,
+                    color: Theme.of(context).primaryColor,
+                    icon: Icon(Icons.add_shopping_cart),
+                    onPressed: () {
+                      cart.add(product);
+                      Scaffold.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('${product.title} Has been added to cart!'),
+                          duration: Duration(milliseconds: 800),
+                          behavior: SnackBarBehavior.floating,
+                          backgroundColor: Theme.of(context).primaryColorDark,
+                        ),
+                      );
+                    },
                   ),
-                ),
-                trailing: IconButton(
-                  color: Theme.of(context).primaryColor,
-                  icon: Icon(Icons.add_shopping_cart),
-                  onPressed: () {
-                    cart.add(product);
-                    Scaffold.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text('${product.title} Has been added to cart!'),
-                        duration: Duration(milliseconds: 800),
-                        behavior: SnackBarBehavior.floating,
-                        backgroundColor: Theme.of(context).primaryColorDark,
-                      ),
-                    );
-                  },
                 ),
               ),
             ),
