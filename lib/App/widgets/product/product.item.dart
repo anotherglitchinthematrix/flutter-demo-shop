@@ -70,7 +70,7 @@ class ProductItem extends StatelessWidget {
                   style: TextStyle(
                     color: Theme.of(context).primaryColorDark,
                     fontFamily: 'Inter',
-                    fontSize: 14,
+                    fontSize: 16,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
