@@ -21,6 +21,8 @@ class CartProvider with ChangeNotifier {
 
   int get count => this._list.length;
 
+  bool get isEmpty => this.count == 0;
+
   /// Get the total amount of the cart items.
   double get totalAmount {
     return _list.fold(0, (total, item) => total + (item.quantity * item.product.price));

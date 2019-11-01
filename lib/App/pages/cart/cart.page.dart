@@ -60,9 +60,38 @@ class CartPage extends StatelessWidget {
                 ),
               ),
             ),
-            CartList(cart),
+            cart.isEmpty ? _EmptyState() : CartList(cart),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class _EmptyState extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Icon(
+            Icons.shopping_cart,
+            size: 48,
+            color: Theme.of(context).primaryColorLight,
+          ),
+          SizedBox(
+            height: 8,
+          ),
+          Text(
+            'Cart is empty',
+            style: TextStyle(
+              fontSize: 18,
+              color: Theme.of(context).primaryColorLight,
+            ),
+          ),
+        ],
       ),
     );
   }
