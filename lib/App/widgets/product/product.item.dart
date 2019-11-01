@@ -77,7 +77,17 @@ class ProductItem extends StatelessWidget {
                 trailing: IconButton(
                   color: Theme.of(context).primaryColor,
                   icon: Icon(Icons.add_shopping_cart),
-                  onPressed: () => cart.addToCart(product.id),
+                  onPressed: () {
+                    cart.addToCart(product.id);
+                    Scaffold.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text('${product.title} Has been added to cart!'),
+                        duration: Duration(milliseconds: 800),
+                        behavior: SnackBarBehavior.floating,
+                        backgroundColor: Theme.of(context).primaryColorDark,
+                      ),
+                    );
+                  },
                 ),
               ),
             ),
