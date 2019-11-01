@@ -105,7 +105,7 @@ class _ActionContainer extends StatelessWidget {
               type: MaterialType.button,
               child: InkWell(
                 onTap: () {
-                  Provider.of<CartProvider>(context).addToCart(product);
+                  Provider.of<CartProvider>(context).add(product);
                   Scaffold.of(context).showSnackBar(
                     SnackBar(
                       content: Text('${product.title} Has been added to cart!'),

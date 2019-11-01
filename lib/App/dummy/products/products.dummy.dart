@@ -29,4 +29,11 @@ final List<Product> dummyProducts = [
     price: 39.99,
     imageURL: 'https://dummyimage.com/2:3x480/FFF',
   ),
+  Product(
+    id: 'p5',
+    title: 'Product 5',
+    description: 'Product 5 description',
+    price: 49.99,
+    imageURL: 'https://dummyimage.com/2:3x480/FFF',
+  ),
 ];

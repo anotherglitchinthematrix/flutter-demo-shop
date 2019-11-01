@@ -28,7 +28,7 @@ class CartProvider with ChangeNotifier {
     return _list.fold(0, (total, item) => total + (item.quantity * item.product.price));
   }
 
-  void addToCart(Product product) {
+  void add(Product product) {
     /// try to find the item in the cart,
     /// if it's present return the item.
     /// if it's not present create and return the item.
@@ -50,7 +50,7 @@ class CartProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void removeFromCart(CartItem item) {
+  void remove(CartItem item) {
     _list.remove(item);
     notifyListeners();
   }

@@ -37,7 +37,7 @@ class CartListItem extends StatelessWidget {
             ),
             direction: DismissDirection.endToStart,
             onDismissed: (_) {
-              Provider.of<CartProvider>(context).removeFromCart(item);
+              Provider.of<CartProvider>(context).remove(item);
             },
             child: ListTile(
               contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 8),
