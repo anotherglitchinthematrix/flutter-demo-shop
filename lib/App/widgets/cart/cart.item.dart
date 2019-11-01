@@ -39,8 +39,20 @@ class CartListItem extends StatelessWidget {
               product.imageURL,
               fit: BoxFit.cover,
             ),
-            title: Text(product.title),
-            subtitle: Text(product.description),
+            title: Text(
+              product.title,
+              style: TextStyle(
+                color: Theme.of(context).primaryColorDark,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+            subtitle: Text(
+              product.description,
+              style: TextStyle(
+                color: Theme.of(context).primaryColor,
+                fontWeight: FontWeight.w400,
+              ),
+            ),
             trailing: Row(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
@@ -86,11 +98,13 @@ class _CardColumn extends StatelessWidget {
             title,
             style: TextStyle(
               fontSize: 12,
+              color: Theme.of(context).primaryColor,
             ),
           ),
           Text(
             subtitle,
             style: TextStyle(
+              color: Theme.of(context).primaryColorDark,
               fontWeight: FontWeight.w500,
             ),
           ),

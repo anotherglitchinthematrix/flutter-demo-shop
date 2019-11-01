@@ -16,7 +16,7 @@ class ProductsPage extends StatelessWidget {
           Consumer<CartProvider>(
             builder: (context, cart, _) => BadgeButton(
               icon: Icons.shopping_cart,
-              text: cart.count,
+              text: '${cart.count}',
               onPressed: () {
                 Navigator.of(context).pushNamed(CartPage.routeName);
               },

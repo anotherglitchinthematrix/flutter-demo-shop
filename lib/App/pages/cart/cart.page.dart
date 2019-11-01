@@ -16,11 +16,47 @@ class CartPage extends StatelessWidget {
         builder: (context, cart, _) => Column(
           children: <Widget>[
             Card(
+              // color: Theme.of(context).primaryColorLight,
               margin: EdgeInsets.all(8),
               child: Padding(
-                padding: EdgeInsets.all(8),
+                padding: EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                 child: Row(
-                  children: <Widget>[],
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    FlatButton.icon(
+                      color: Theme.of(context).primaryColor.withAlpha(48),
+                      textColor: Theme.of(context).primaryColorDark,
+                      splashColor: Theme.of(context).primaryColor.withAlpha(96),
+                      highlightColor: Colors.transparent,
+                      onPressed: () {},
+                      icon: Icon(
+                        Icons.payment,
+                      ),
+                      label: Text(
+                        'Order Now',
+                      ),
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: <Widget>[
+                        Text(
+                          'Total',
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: Theme.of(context).primaryColorDark,
+                          ),
+                        ),
+                        Text(
+                          '\$ ${cart.totalAmount.toStringAsFixed(2)}',
+                          style: TextStyle(
+                            color: Theme.of(context).primaryColorDark,
+                            fontWeight: FontWeight.w500,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ),
             ),

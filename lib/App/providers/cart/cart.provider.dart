@@ -19,7 +19,12 @@ class CartProvider with ChangeNotifier {
 
   List<CartItem> get list => _list;
 
-  String get count => this._list.length.toString();
+  int get count => this._list.length;
+
+  /// Get the total amount of the cart items.
+  double get totalAmount {
+    return _list.fold(0, (total, item) => total + (item.quantity * item.product.price));
+  }
 
   void addToCart(Product product) {
     /// try to find the item in the cart,
