@@ -10,11 +10,6 @@ final List<CartItem> dummyCart = [
   CartItem(
     id: 'c2',
     product: dummyProducts[1],
-    quantity: 4,
-  ),
-  CartItem(
-    id: 'c3',
-    product: dummyProducts[2],
-    quantity: 6,
+    quantity: 1,
   ),
 ];
