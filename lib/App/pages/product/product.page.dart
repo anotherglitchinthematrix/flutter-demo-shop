@@ -89,7 +89,7 @@ class _ActionContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var favorites = Provider.of<FavoritesProvider>(context);
+    // var favorites = Provider.of<FavoritesProvider>(context);
 
     return Container(
       margin: EdgeInsets.only(bottom: 8),
@@ -157,17 +157,21 @@ class _ActionContainer extends StatelessWidget {
             type: MaterialType.button,
             borderRadius: BorderRadius.circular(4),
             color: Colors.pink.withAlpha(36),
-            child: InkWell(
-              splashColor: Colors.pink.withAlpha(48),
-              highlightColor: Colors.pink.withAlpha(64),
-              onTap: () => favorites.toggle(product.id),
-              child: Padding(
-                padding: const EdgeInsets.all(16),
-                child: Icon(
-                  favorites.isFavorite(product.id) ? Icons.favorite : Icons.favorite_border,
-                  color: Colors.pink,
-                ),
-              ),
+            child: Consumer<FavoritesProvider>(
+              builder: (context, favorites, _) {
+                return InkWell(
+                  splashColor: Colors.pink.withAlpha(48),
+                  highlightColor: Colors.pink.withAlpha(64),
+                  onTap: () => favorites.toggle(product.id),
+                  child: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Icon(
+                      favorites.isFavorite(product.id) ? Icons.favorite : Icons.favorite_border,
+                      color: Colors.pink,
+                    ),
+                  ),
+                );
+              },
             ),
           ),
         ],
