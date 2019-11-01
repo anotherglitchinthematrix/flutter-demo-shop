@@ -57,38 +57,51 @@ class ProductGridItem extends StatelessWidget {
             ),
             footer: Container(
               margin: EdgeInsets.all(4),
-              child: ClipRRect(
+              decoration: BoxDecoration(
+                color: Theme.of(context).primaryColor.withAlpha(64),
                 borderRadius: BorderRadius.circular(4),
-                child: GridTileBar(
-                  backgroundColor: Theme.of(context).primaryColorDark.withAlpha(48),
-                  title: Text(
-                    product.title,
-                    overflow: TextOverflow.fade,
-                    style: TextStyle(
-                      color: Theme.of(context).primaryColorDark,
-                      fontFamily: 'Inter',
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.all(8),
+                      child: Text(
+                        '${product.title}',
+                        softWrap: false,
+                        overflow: TextOverflow.fade,
+                        style: TextStyle(
+                          color: Theme.of(context).primaryColorDark,
+                        ),
+                      ),
                     ),
                   ),
-                  trailing: IconButton(
-                    highlightColor: Colors.transparent,
-                    splashColor: Colors.transparent,
-                    color: Theme.of(context).primaryColor,
-                    icon: Icon(Icons.add_shopping_cart),
-                    onPressed: () {
-                      cart.add(product);
-                      Scaffold.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text('${product.title} Has been added to cart!'),
-                          duration: Duration(milliseconds: 800),
-                          behavior: SnackBarBehavior.floating,
-                          backgroundColor: Theme.of(context).primaryColorDark,
+                  Material(
+                    type: MaterialType.card,
+                    color: Theme.of(context).primaryColor.withAlpha(64),
+                    child: InkWell(
+                      onTap: () {
+                        cart.add(product);
+                        Scaffold.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('${product.title} Has been added to cart!'),
+                            duration: Duration(milliseconds: 800),
+                            behavior: SnackBarBehavior.floating,
+                            backgroundColor: Theme.of(context).primaryColorDark,
+                          ),
+                        );
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Icon(
+                          Icons.add_shopping_cart,
+                          color: Theme.of(context).primaryColorDark,
                         ),
-                      );
-                    },
+                      ),
+                    ),
                   ),
-                ),
+                ],
               ),
             ),
           ),

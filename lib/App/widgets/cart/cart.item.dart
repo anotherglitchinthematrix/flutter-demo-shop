@@ -42,9 +42,12 @@ class CartListItem extends StatelessWidget {
             child: ListTile(
               contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 8),
               // dense: true,
-              leading: Image.network(
-                product.imageURL,
-                fit: BoxFit.cover,
+              leading: ClipRRect(
+                borderRadius: BorderRadius.circular(4),
+                child: Image.network(
+                  product.imageURL,
+                  fit: BoxFit.cover,
+                ),
               ),
               title: Text(
                 product.title,
