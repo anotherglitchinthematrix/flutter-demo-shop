@@ -4,8 +4,8 @@ import 'package:course_008/App/models/index.dart';
 import 'package:course_008/App/providers/index.dart';
 import 'package:course_008/App/pages/index.dart';
 
-class ProductItem extends StatelessWidget {
-  ProductItem(this.product);
+class ProductGridItem extends StatelessWidget {
+  ProductGridItem(this.product);
 
   final Product product;
 
