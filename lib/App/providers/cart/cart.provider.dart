@@ -17,6 +17,8 @@ class CartProvider with ChangeNotifier {
 
   List<CartItem> get list => _list;
 
+  String get count => this._list.length.toString();
+
   void addToCart(String productId) {
     /// try to find the item in the cart,
     /// if it's present return the item.
@@ -36,12 +38,6 @@ class CartProvider with ChangeNotifier {
     );
 
     item.quantity++;
-    print(this);
-  }
-
-  @override
-  String toString() {
-    _list.forEach((i) => print('${i.id}, ${i.productId}, ${i.quantity}'));
-    return '';
+    notifyListeners();
   }
 }

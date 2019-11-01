@@ -1,5 +1,7 @@
+import 'package:course_008/App/providers/index.dart';
 import 'package:flutter/material.dart';
 import 'package:course_008/App/widgets/index.dart';
+import 'package:provider/provider.dart';
 
 class ProductsPage extends StatelessWidget {
   static const routeName = 'products';
@@ -10,12 +12,12 @@ class ProductsPage extends StatelessWidget {
       appBar: AppBar(
         title: Text('Shop App'),
         actions: <Widget>[
-          BadgeButton(
-            icon: Icons.shopping_cart,
-            text: '9',
-            onPressed: () {
-              print('test');
-            },
+          Consumer<CartProvider>(
+            builder: (context, cart, _) => BadgeButton(
+              icon: Icons.shopping_cart,
+              text: cart.count,
+              onPressed: () {},
+            ),
           ),
         ],
       ),
