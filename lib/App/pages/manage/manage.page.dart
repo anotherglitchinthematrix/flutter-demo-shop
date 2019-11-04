@@ -1,5 +1,6 @@
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
+import 'package:course_008/App/pages/index.dart';
 import 'package:course_008/App/providers/index.dart';
 import 'package:course_008/App/widgets/index.dart';
 
@@ -14,7 +15,7 @@ class ManagePage extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.add_box),
             tooltip: 'Add Product',
-            onPressed: () {},
+            onPressed: () => Navigator.of(context).pushNamed(EditPage.routeName),
           ),
         ],
       ),
