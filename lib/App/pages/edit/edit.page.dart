@@ -15,6 +15,20 @@ class _EditPageState extends State<EditPage> {
   final _imageFocusNode = FocusNode();
 
   @override
+  void initState() {
+    _imageFocusNode.addListener(_updateImageURL);
+    super.initState();
+  }
+
+  void _updateImageURL() {
+    if (!_imageFocusNode.hasFocus) {
+      setState(() {
+        // just call empty to inform.
+      });
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -98,6 +112,9 @@ class _EditPageState extends State<EditPage> {
     _priceFocusNode.dispose();
     _descriptionFocusNode.dispose();
     _imageTextController.dispose();
+
+    // remove the listener before.
+    _imageFocusNode.removeListener(_updateImageURL);
     _imageFocusNode.dispose();
     super.dispose();
   }
