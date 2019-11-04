@@ -198,6 +198,7 @@ class ProductGridItem extends StatelessWidget {
                           child: InkWell(
                             onTap: () {
                               cart.add(product);
+                              Scaffold.of(context).hideCurrentSnackBar();
                               Scaffold.of(context).showSnackBar(
                                 SnackBar(
                                   content: Text('${product.title} Has been added to cart!'),
