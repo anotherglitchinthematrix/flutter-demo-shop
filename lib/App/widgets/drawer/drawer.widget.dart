@@ -20,6 +20,11 @@ class AppDrawer extends StatelessWidget {
             title: Text('Orders'),
             onTap: () => Navigator.of(context).pushReplacementNamed(OrderPage.routeName),
           ),
+          ListTile(
+            leading: Icon(Icons.edit),
+            title: Text('Manage Products'),
+            onTap: () => Navigator.of(context).pushReplacementNamed(ManagePage.routeName),
+          ),
         ],
       ),
     );

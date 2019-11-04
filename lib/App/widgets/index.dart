@@ -3,3 +3,4 @@ export 'cart/index.dart';
 export 'badge/index.dart';
 export 'drawer/drawer.widget.dart';
 export 'order/index.dart';
+export 'manage/index.dart';
