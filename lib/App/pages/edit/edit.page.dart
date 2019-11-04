@@ -58,4 +58,11 @@ class _EditPageState extends State<EditPage> {
       ),
     );
   }
+
+  @override
+  void dispose() {
+    _priceFocusNode.dispose();
+    _descriptionFocusNode.dispose();
+    super.dispose();
+  }
 }
