@@ -56,17 +56,20 @@ class CartProvider with ChangeNotifier {
   }
 
   void removeSingle(Product item) {
-    // TODO: catch StateError.
-    var _item = _list.firstWhere((i) => i.product == item);
+    try {
+      var _item = _list.firstWhere((i) => i.product == item);
 
-    if (_item.quantity > 1) {
-      _item.quantity = _item.quantity - 1;
-    } else {
-      print(item);
-      _list.removeWhere((i) => i.product == item);
+      if (_item.quantity > 1) {
+        _item.quantity = _item.quantity - 1;
+      } else {
+        _list.removeWhere((i) => i.product == item);
+      }
+
+      notifyListeners();
+    } on StateError {
+      // StateError is thrown when no item is present.
+      return;
     }
-
-    notifyListeners();
   }
 
   void clear() {
