@@ -17,7 +17,7 @@ class OrderItem {
 class OrderProvider with ChangeNotifier {
   List<OrderItem> _orders = [];
 
-  List<OrderItem> get orders => _orders;
+  List<OrderItem> get list => _orders;
 
   void order(List<CartItem> cart) {
     _orders.add(OrderItem(
