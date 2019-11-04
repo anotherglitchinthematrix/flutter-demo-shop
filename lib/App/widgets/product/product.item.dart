@@ -204,6 +204,11 @@ class ProductGridItem extends StatelessWidget {
                                   duration: Duration(milliseconds: 800),
                                   behavior: SnackBarBehavior.floating,
                                   backgroundColor: Theme.of(context).primaryColorDark,
+                                  action: SnackBarAction(
+                                    label: 'Undo',
+                                    onPressed: () => cart.removeSingle(product),
+                                    textColor: Theme.of(context).primaryColorLight,
+                                  ),
                                 ),
                               );
                             },
