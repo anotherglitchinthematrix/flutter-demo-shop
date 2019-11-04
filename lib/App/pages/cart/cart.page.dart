@@ -31,9 +31,14 @@ class CartPage extends StatelessWidget {
                       highlightColor: Colors.transparent,
                       onPressed: () {
                         // Place the order.
-                        Provider.of<OrderProvider>(context, listen: false).order(cart.list, cart.totalAmount);
-                        cart.clear();
-                        Navigator.pushReplacementNamed(context, OrderPage.routeName);
+                        var isCompleted = Provider.of<OrderProvider>(context, listen: false).order(
+                          cart.list,
+                          cart.totalAmount,
+                        );
+                        if (isCompleted) {
+                          cart.clear();
+                          Navigator.pushReplacementNamed(context, OrderPage.routeName);
+                        }
                       },
                       icon: Icon(
                         Icons.payment,

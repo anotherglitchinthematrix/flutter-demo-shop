@@ -20,14 +20,19 @@ class OrderProvider with ChangeNotifier {
 
   List<OrderItem> get list => _orders;
 
-  void order(List<CartItem> cart, double total) {
-    _orders.add(OrderItem(
-      id: DateTime.now().toString(),
-      cart: cart,
-      total: total,
-      date: DateTime.now(),
-    ));
+  bool order(List<CartItem> cart, double total) {
+    if (cart.length > 0) {
+      _orders.add(OrderItem(
+        id: DateTime.now().toString(),
+        cart: cart,
+        total: total,
+        date: DateTime.now(),
+      ));
 
-    notifyListeners();
+      notifyListeners();
+
+      return true;
+    }
+    return false;
   }
 }
