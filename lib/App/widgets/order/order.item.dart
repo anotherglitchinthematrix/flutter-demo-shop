@@ -10,6 +10,10 @@ class OrderListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       title: Text(order.date.toString()),
+      trailing: IconButton(
+        icon: Icon(Icons.keyboard_arrow_down),
+        onPressed: () {},
+      ),
     );
   }
 }
