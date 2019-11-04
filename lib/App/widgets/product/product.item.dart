@@ -40,11 +40,10 @@ class ProductGridItem extends StatelessWidget {
                     filter: ui.ImageFilter.blur(sigmaX: 2, sigmaY: 2),
                     child: Dialog(
                       backgroundColor: Colors.transparent,
-                      // contentPadding: EdgeInsets.zero,
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(12),
                         child: Container(
-                          height: 500,
+                          height: 480,
                           width: double.infinity,
                           child: Stack(
                             // alignment: Alignment.bottomCenter,
@@ -84,25 +83,44 @@ class ProductGridItem extends StatelessWidget {
                                         child: Padding(
                                           padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
                                           child: Container(
-                                            child: Column(
-                                              mainAxisSize: MainAxisSize.min,
-                                              mainAxisAlignment: MainAxisAlignment.center,
-                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                              children: <Widget>[
-                                                Text(
-                                                  product.title,
-                                                  style: TextStyle(
-                                                    fontSize: 18,
-                                                    fontWeight: FontWeight.w500,
-                                                    color: Theme.of(context).primaryColorDark,
+                                            child: Row(
+                                              children: [
+                                                Expanded(
+                                                  child: Column(
+                                                    mainAxisSize: MainAxisSize.min,
+                                                    mainAxisAlignment: MainAxisAlignment.center,
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                    children: <Widget>[
+                                                      Text(
+                                                        product.title,
+                                                        style: TextStyle(
+                                                          fontSize: 18,
+                                                          fontWeight: FontWeight.w500,
+                                                          color: Theme.of(context).primaryColorDark,
+                                                        ),
+                                                      ),
+                                                      Text(
+                                                        product.description,
+                                                        style: TextStyle(
+                                                          fontSize: 14,
+                                                          color: Theme.of(context).primaryColorDark,
+                                                        ),
+                                                      ),
+                                                    ],
                                                   ),
                                                 ),
-                                                Text(
-                                                  product.description,
-                                                  style: TextStyle(
-                                                    fontSize: 14,
+                                                FlatButton.icon(
+                                                  icon: Icon(
+                                                    Icons.add_shopping_cart,
                                                     color: Theme.of(context).primaryColorDark,
                                                   ),
+                                                  label: Text('Add',
+                                                      style: TextStyle(
+                                                        color: Theme.of(context).primaryColorDark,
+                                                      )),
+                                                  onPressed: () {
+                                                    cart.add(product);
+                                                  },
                                                 ),
                                               ],
                                             ),
