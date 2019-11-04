@@ -1,3 +1,4 @@
+import 'package:course_008/App/dummy/index.dart';
 import 'package:flutter/foundation.dart';
 import 'package:course_008/App/providers/index.dart';
 
@@ -15,7 +16,7 @@ class OrderItem {
 }
 
 class OrderProvider with ChangeNotifier {
-  List<OrderItem> _orders = [];
+  List<OrderItem> _orders = [...dummyOrder];
 
   List<OrderItem> get list => _orders;
 
