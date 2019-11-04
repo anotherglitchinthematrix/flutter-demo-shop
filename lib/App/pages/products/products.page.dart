@@ -10,6 +10,7 @@ class ProductsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: AppDrawer(),
       appBar: AppBar(
         title: Text('Shop App'),
         actions: <Widget>[

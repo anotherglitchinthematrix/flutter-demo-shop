@@ -25,8 +25,10 @@ class App extends StatelessWidget {
         ),
         home: ProductsPage(),
         routes: {
+          ProductsPage.routeName: (context) => ProductsPage(),
           ProductPage.routeName: (context) => ProductPage(),
           CartPage.routeName: (context) => CartPage(),
+          OrderPage.routeName: (context) => OrderPage(),
         },
       ),
     );
