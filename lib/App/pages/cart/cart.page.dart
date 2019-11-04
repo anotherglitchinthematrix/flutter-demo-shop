@@ -1,3 +1,4 @@
+import 'package:course_008/App/pages/order/order.page.dart';
 import 'package:course_008/App/widgets/index.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -32,6 +33,7 @@ class CartPage extends StatelessWidget {
                         // Place the order.
                         Provider.of<OrderProvider>(context, listen: false).order(cart.list, cart.totalAmount);
                         cart.clear();
+                        Navigator.pushReplacementNamed(context, OrderPage.routeName);
                       },
                       icon: Icon(
                         Icons.payment,
