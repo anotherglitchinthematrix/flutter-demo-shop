@@ -33,6 +33,7 @@ class App extends StatelessWidget {
           CartPage.routeName: (context) => CartPage(),
           OrderPage.routeName: (context) => OrderPage(),
           ManagePage.routeName: (context) => ManagePage(),
+          EditPage.routeName: (context) => EditPage(),
         },
       ),
     );
