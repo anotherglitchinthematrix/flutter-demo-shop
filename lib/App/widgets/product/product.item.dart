@@ -32,6 +32,51 @@ class ProductGridItem extends StatelessWidget {
       child: ClipRRect(
         borderRadius: radius,
         child: GestureDetector(
+          onLongPress: () {
+            showDialog(
+                context: context,
+                builder: (context) {
+                  return BackdropFilter(
+                    filter: ui.ImageFilter.blur(sigmaX: 2, sigmaY: 2),
+                    child: Dialog(
+                      backgroundColor: Colors.transparent,
+                      // contentPadding: EdgeInsets.zero,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(12),
+                        child: Container(
+                          height: 500,
+                          child: Stack(
+                            // alignment: Alignment.bottomCenter,
+                            children: <Widget>[
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(8),
+                                child: Container(
+                                  child: Image.network(product.imageURL),
+                                ),
+                              ),
+                              Align(
+                                alignment: Alignment.bottomCenter,
+                                child: Container(
+                                  color: Theme.of(context).primaryColorLight,
+                                  width: double.infinity,
+                                  height: 40,
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    product.description,
+                                    style: TextStyle(
+                                      color: Theme.of(context).primaryColorDark,
+                                    ),
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  );
+                });
+          },
           onTap: () {
             Navigator.of(context).pushNamed(
               ProductPage.routeName,
