@@ -27,6 +27,28 @@ class CartListItem extends StatelessWidget {
           borderRadius: BorderRadius.circular(4),
           child: Dismissible(
             key: ValueKey(item.id),
+            confirmDismiss: (direction) {
+              return showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      title: Text('Action Required'),
+                      content: Text('Do you want to delete the item.'),
+                      actions: <Widget>[
+                        FlatButton(
+                          child: Text('No'),
+                          onPressed: () => Navigator.of(context).pop(false),
+                        ),
+                        FlatButton(
+                          color: Theme.of(context).errorColor.withAlpha(48),
+                          textColor: Theme.of(context).errorColor,
+                          child: Text('Yes'),
+                          onPressed: () => Navigator.of(context).pop(true),
+                        ),
+                      ],
+                    );
+                  });
+            },
             movementDuration: Duration(milliseconds: 200),
             resizeDuration: Duration(milliseconds: 200),
             background: Container(
