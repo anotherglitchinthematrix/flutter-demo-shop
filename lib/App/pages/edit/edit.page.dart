@@ -11,6 +11,8 @@ class EditPage extends StatefulWidget {
 class _EditPageState extends State<EditPage> {
   final _priceFocusNode = FocusNode();
   final _descriptionFocusNode = FocusNode();
+  final _imageTextController = TextEditingController();
+  final _imageFocusNode = FocusNode();
 
   @override
   Widget build(BuildContext context) {
@@ -52,6 +54,37 @@ class _EditPageState extends State<EditPage> {
                 ),
                 focusNode: _descriptionFocusNode,
               ),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: <Widget>[
+                  Container(
+                    margin: EdgeInsets.only(
+                      top: 8,
+                      right: 8,
+                    ),
+                    color: Colors.red,
+                    width: 96,
+                    height: 96,
+                    child: _imageTextController.text.isEmpty
+                        ? Icon(Icons.broken_image)
+                        : Image.network(
+                            _imageTextController.text,
+                            fit: BoxFit.cover,
+                          ),
+                  ),
+                  Expanded(
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                        labelText: 'Image URL',
+                      ),
+                      textInputAction: TextInputAction.done,
+                      keyboardType: TextInputType.url,
+                      controller: _imageTextController,
+                      focusNode: _imageFocusNode,
+                    ),
+                  ),
+                ],
+              ),
             ],
           ),
         ),
@@ -61,8 +94,11 @@ class _EditPageState extends State<EditPage> {
 
   @override
   void dispose() {
+    // Free memory to  prevenet memory leaks.
     _priceFocusNode.dispose();
     _descriptionFocusNode.dispose();
+    _imageTextController.dispose();
+    _imageFocusNode.dispose();
     super.dispose();
   }
 }
