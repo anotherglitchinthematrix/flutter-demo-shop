@@ -28,7 +28,11 @@ class CartPage extends StatelessWidget {
                       textColor: Theme.of(context).primaryColorDark,
                       splashColor: Theme.of(context).primaryColor.withAlpha(96),
                       highlightColor: Colors.transparent,
-                      onPressed: () {},
+                      onPressed: () {
+                        // Place the order.
+                        Provider.of<OrderProvider>(context, listen: false).order(cart.list, cart.totalAmount);
+                        cart.clear();
+                      },
                       icon: Icon(
                         Icons.payment,
                       ),

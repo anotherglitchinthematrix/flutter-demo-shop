@@ -11,6 +11,7 @@ class OrderPage extends StatelessWidget {
       appBar: AppBar(
         title: Text('Orders'),
       ),
+      body: OrderList(),
     );
   }
 }
