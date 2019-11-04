@@ -47,7 +47,7 @@ class _OrderListItemState extends State<OrderListItem> {
               ),
 
               constraints: BoxConstraints(
-                maxHeight: 256,
+                maxHeight: 196,
               ),
               child: Scrollbar(
                 child: ListView.builder(
