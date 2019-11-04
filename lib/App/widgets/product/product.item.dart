@@ -45,26 +45,70 @@ class ProductGridItem extends StatelessWidget {
                         borderRadius: BorderRadius.circular(12),
                         child: Container(
                           height: 500,
+                          width: double.infinity,
                           child: Stack(
                             // alignment: Alignment.bottomCenter,
                             children: <Widget>[
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(8),
-                                child: Container(
-                                  child: Image.network(product.imageURL),
+                              Container(
+                                width: double.infinity,
+                                child: Image.network(
+                                  product.imageURL,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                              Align(
+                                alignment: Alignment.topRight,
+                                child: Consumer<FavoritesProvider>(
+                                  builder: (_, favorites, child) => IconButton(
+                                    splashColor: Colors.transparent,
+                                    highlightColor: Colors.transparent,
+                                    color: Colors.pink,
+                                    iconSize: 36,
+                                    icon:
+                                        Icon(favorites.isFavorite(product.id) ? Icons.favorite : Icons.favorite_border),
+                                    onPressed: () => favorites.toggle(product.id),
+                                  ),
                                 ),
                               ),
                               Align(
                                 alignment: Alignment.bottomCenter,
-                                child: Container(
-                                  color: Theme.of(context).primaryColorLight,
-                                  width: double.infinity,
-                                  height: 40,
-                                  alignment: Alignment.center,
-                                  child: Text(
-                                    product.description,
-                                    style: TextStyle(
-                                      color: Theme.of(context).primaryColorDark,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(8),
+                                    child: BackdropFilter(
+                                      filter: ui.ImageFilter.blur(sigmaX: 8, sigmaY: 8),
+                                      child: Container(
+                                        width: double.infinity,
+                                        color: Theme.of(context).primaryColor.withAlpha(48),
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
+                                          child: Container(
+                                            child: Column(
+                                              mainAxisSize: MainAxisSize.min,
+                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children: <Widget>[
+                                                Text(
+                                                  product.title,
+                                                  style: TextStyle(
+                                                    fontSize: 18,
+                                                    fontWeight: FontWeight.w500,
+                                                    color: Theme.of(context).primaryColorDark,
+                                                  ),
+                                                ),
+                                                Text(
+                                                  product.description,
+                                                  style: TextStyle(
+                                                    fontSize: 14,
+                                                    color: Theme.of(context).primaryColorDark,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ),
                                     ),
                                   ),
                                 ),
