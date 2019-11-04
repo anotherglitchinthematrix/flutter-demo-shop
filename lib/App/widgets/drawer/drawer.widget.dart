@@ -7,6 +7,9 @@ class AppDrawer extends StatelessWidget {
     return Drawer(
       child: Column(
         children: <Widget>[
+          SizedBox(
+            height: 128,
+          ),
           ListTile(
             leading: Icon(Icons.grid_on),
             title: Text('Products'),
