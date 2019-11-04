@@ -8,10 +8,11 @@ class OrderList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<OrderProvider>(
       builder: (context, orders, _) {
+        var _reversed = orders.list.reversed.toList();
         return ListView.builder(
           itemCount: orders.list.length,
           itemBuilder: (context, index) {
-            return OrderListItem(orders.list[index]);
+            return OrderListItem(_reversed[index]);
           },
         );
       },

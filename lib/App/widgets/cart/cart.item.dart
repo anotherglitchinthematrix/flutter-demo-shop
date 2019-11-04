@@ -4,9 +4,10 @@ import 'package:provider/provider.dart';
 import 'package:course_008/App/providers/index.dart';
 
 class CartListItem extends StatelessWidget {
-  CartListItem(this.item);
+  CartListItem(this.item, {this.flat = false});
 
   final CartItem item;
+  final flat;
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +23,8 @@ class CartListItem extends StatelessWidget {
       },
       child: Card(
         // color: Colors.blue,
+        // elevation: 0,
+        elevation: flat ? 0 : 2,
         margin: EdgeInsets.only(bottom: 8),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(4),
