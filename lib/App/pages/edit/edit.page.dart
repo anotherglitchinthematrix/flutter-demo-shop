@@ -26,12 +26,15 @@ class _EditPageState extends State<EditPage> {
   );
 
   void _saveForm() {
-    _formKey.currentState.save();
-    print(_editedProduct.id);
-    print(_editedProduct.title);
-    print(_editedProduct.description);
-    print(_editedProduct.price);
-    print(_editedProduct.imageURL);
+    final isValid = _formKey.currentState.validate();
+    if (isValid) {
+      _formKey.currentState.save();
+      print(_editedProduct.id);
+      print(_editedProduct.title);
+      print(_editedProduct.description);
+      print(_editedProduct.price);
+      print(_editedProduct.imageURL);
+    }
   }
 
   @override
@@ -69,6 +72,12 @@ class _EditPageState extends State<EditPage> {
           child: ListView(
             children: <Widget>[
               TextFormField(
+                validator: (value) {
+                  if (value.isEmpty) {
+                    return 'Please enter a title for the product';
+                  }
+                  return null;
+                },
                 onSaved: (value) {
                   _editedProduct = Product(
                     id: _editedProduct.id,
@@ -88,6 +97,19 @@ class _EditPageState extends State<EditPage> {
                 onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(_priceFocusNode),
               ),
               TextFormField(
+                // autovalidate: true,
+                validator: (value) {
+                  if (value.isEmpty) {
+                    return 'Price can\'t be empty';
+                  }
+                  if (double.tryParse(value) == null) {
+                    return 'Plase enter a number.';
+                  }
+                  if (double.parse(value) <= 0) {
+                    return 'Plase enter a number greater than 0';
+                  }
+                  return null;
+                },
                 onSaved: (value) {
                   _editedProduct = Product(
                     id: _editedProduct.id,
@@ -107,6 +129,17 @@ class _EditPageState extends State<EditPage> {
                 focusNode: _priceFocusNode,
               ),
               TextFormField(
+                validator: (value) {
+                  if (value.isEmpty) {
+                    return 'Plase enter a description';
+                  }
+
+                  if (value.length < 10) {
+                    return 'Description should be at least 10 characters';
+                  }
+
+                  return null;
+                },
                 onSaved: (value) {
                   _editedProduct = Product(
                     id: _editedProduct.id,
@@ -144,6 +177,15 @@ class _EditPageState extends State<EditPage> {
                   ),
                   Expanded(
                     child: TextFormField(
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return 'Please enter a image URL';
+                        }
+
+                        // if()
+
+                        return null;
+                      },
                       onSaved: (value) {
                         _editedProduct = Product(
                           id: _editedProduct.id,
