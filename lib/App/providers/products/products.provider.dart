@@ -26,8 +26,12 @@ class ProductsProvider with ChangeNotifier {
   }
 
   void deleteProduct(Product product) {
-    _products.remove(product);
-    notifyListeners();
+    String url = 'https://flutter-shop-a3a3e.firebaseio.com/products/${product.id}.json';
+
+    http.delete(url).then((_) {
+      _products.remove(product);
+      notifyListeners();
+    });
   }
 
   Future<void> patchProduct(Product product) async {
