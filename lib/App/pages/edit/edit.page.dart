@@ -1,3 +1,4 @@
+import 'package:course_008/App/models/index.dart';
 import 'package:flutter/material.dart';
 
 class EditPage extends StatefulWidget {
@@ -9,10 +10,29 @@ class EditPage extends StatefulWidget {
 }
 
 class _EditPageState extends State<EditPage> {
+  final formKey = GlobalKey<FormState>();
+
   final _priceFocusNode = FocusNode();
   final _descriptionFocusNode = FocusNode();
   final _imageTextController = TextEditingController();
   final _imageFocusNode = FocusNode();
+
+  Product _editedProduct = Product(
+    id: '',
+    title: '',
+    description: '',
+    imageURL: '',
+    price: 0,
+  );
+
+  void _saveForm() {
+    formKey.currentState.save();
+    print(_editedProduct.id);
+    print(_editedProduct.title);
+    print(_editedProduct.description);
+    print(_editedProduct.price);
+    print(_editedProduct.imageURL);
+  }
 
   @override
   void initState() {
@@ -33,13 +53,29 @@ class _EditPageState extends State<EditPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Add Product'),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.save),
+            onPressed: _saveForm,
+          ),
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Form(
+          key: formKey,
           child: ListView(
             children: <Widget>[
               TextFormField(
+                onSaved: (value) {
+                  _editedProduct = Product(
+                    id: _editedProduct.id,
+                    title: value,
+                    description: _editedProduct.description,
+                    imageURL: _editedProduct.imageURL,
+                    price: _editedProduct.price,
+                  );
+                },
                 // maxLength: 128,
                 // maxLengthEnforced: false,
                 decoration: InputDecoration(
@@ -50,6 +86,15 @@ class _EditPageState extends State<EditPage> {
                 onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(_priceFocusNode),
               ),
               TextFormField(
+                onSaved: (value) {
+                  _editedProduct = Product(
+                    id: _editedProduct.id,
+                    title: _editedProduct.title,
+                    description: _editedProduct.description,
+                    imageURL: _editedProduct.imageURL,
+                    price: double.parse(value),
+                  );
+                },
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
                   labelText: 'Price',
@@ -60,6 +105,15 @@ class _EditPageState extends State<EditPage> {
                 focusNode: _priceFocusNode,
               ),
               TextFormField(
+                onSaved: (value) {
+                  _editedProduct = Product(
+                    id: _editedProduct.id,
+                    title: _editedProduct.title,
+                    description: value,
+                    imageURL: _editedProduct.imageURL,
+                    price: _editedProduct.price,
+                  );
+                },
                 maxLines: 3,
                 keyboardType: TextInputType.multiline,
                 decoration: InputDecoration(
@@ -88,6 +142,15 @@ class _EditPageState extends State<EditPage> {
                   ),
                   Expanded(
                     child: TextFormField(
+                      onSaved: (value) {
+                        _editedProduct = Product(
+                          id: _editedProduct.id,
+                          title: _editedProduct.title,
+                          description: _editedProduct.description,
+                          imageURL: value,
+                          price: _editedProduct.price,
+                        );
+                      },
                       decoration: InputDecoration(
                         labelText: 'Image URL',
                       ),
