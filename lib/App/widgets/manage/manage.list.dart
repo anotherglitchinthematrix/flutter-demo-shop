@@ -10,6 +10,7 @@ class ManageList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(8),
+      color: Theme.of(context).primaryColor.withAlpha(32),
       child: ListView.builder(
         itemCount: list.length,
         itemBuilder: (context, index) {
