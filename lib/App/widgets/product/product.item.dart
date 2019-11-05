@@ -18,7 +18,7 @@ class ProductGridItem extends StatelessWidget {
 
     /// Using a Consumer<T> wrapping the add to cart button is more reactive.
     /// But in this example we will not use.
-    /// Do not re-build the widget.
+    /// listen: false prevents to re-build the whole widget.
     var cart = Provider.of<CartProvider>(context, listen: false);
 
     return Container(
