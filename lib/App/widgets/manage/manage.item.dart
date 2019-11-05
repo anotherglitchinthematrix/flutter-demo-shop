@@ -10,6 +10,7 @@ class ManageListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final scaffold = Scaffold.of(context);
     return GestureDetector(
       onTap: () => Navigator.of(context).pushNamed(
         ProductPage.routeName,
@@ -104,7 +105,13 @@ class ManageListItem extends StatelessWidget {
                       if (isConfirmed) {
                         // listen false to prevent to rebuild  this widget,
                         // upper widget is already consuming this provider.
-                        Provider.of<ProductsProvider>(context, listen: false).deleteProduct(product);
+                        try {
+                          await Provider.of<ProductsProvider>(context, listen: false).deleteProduct(product);
+                        } catch (error) {
+                          scaffold.showSnackBar(SnackBar(
+                            content: Text(error.toString()),
+                          ));
+                        }
                       }
                     },
                   ),

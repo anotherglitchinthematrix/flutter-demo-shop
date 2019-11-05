@@ -25,13 +25,19 @@ class ProductsProvider with ChangeNotifier {
     }
   }
 
-  void deleteProduct(Product product) {
+  Future<void> deleteProduct(Product product) async {
     String url = 'https://flutter-shop-a3a3e.firebaseio.com/products/${product.id}.json';
 
-    http.delete(url).then((_) {
-      _products.remove(product);
-      notifyListeners();
-    });
+    _products.remove(product);
+    notifyListeners();
+    // optimistic update pattern, do in demand but if it fails undo the action.
+    final response = await http.delete(url);
+
+    if (response.statusCode >= 400) {
+      // re-add the removed product
+      _products.add(product);
+      throw HttpException('Could not delete the product');
+    }
   }
 
   Future<void> patchProduct(Product product) async {
