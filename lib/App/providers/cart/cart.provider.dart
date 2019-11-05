@@ -1,4 +1,4 @@
-import 'package:course_008/App/dummy/cart/cart.dummy.dart';
+// import 'package:course_008/App/dummy/cart/cart.dummy.dart';
 import 'package:course_008/App/models/index.dart';
 import 'package:flutter/material.dart';
 
@@ -15,7 +15,7 @@ class CartItem {
 }
 
 class CartProvider with ChangeNotifier {
-  List<CartItem> _list = [...dummyCart];
+  List<CartItem> _list = [];
 
   List<CartItem> get list => _list;
 

@@ -96,6 +96,7 @@ class _EditPageState extends State<EditPage> {
   }
 
   // context is accessible here unlike the initState() and didChangeDependencies()
+  // note: for providers if listen is false then context will be ommitted and can be used in initState().
   // fired right after initState() but before build().
   @override
   void didChangeDependencies() {

@@ -2,12 +2,12 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:course_008/App/models/index.dart';
-import 'package:course_008/App/dummy/index.dart';
+// import 'package:course_008/App/dummy/index.dart';
 
 class ProductsProvider with ChangeNotifier {
   String url = 'https://flutter-shop-a3a3e.firebaseio.com/products.json';
 
-  List<Product> _products = [...dummyProducts];
+  List<Product> _products = [];
 
   List<Product> get list => _products;
 
@@ -35,6 +35,28 @@ class ProductsProvider with ChangeNotifier {
     if (index != -1) {
       _products[index] = product;
       notifyListeners();
+    }
+  }
+
+  Future<void> fetch() async {
+    try {
+      final response = await http.get(url);
+      final extracted = json.decode(response.body) as Map<String, dynamic>;
+      final List<Product> loadedProduct = [];
+      extracted.forEach((key, value) {
+        loadedProduct.add(Product(
+          id: key,
+          title: value['title'],
+          description: value['description'],
+          price: value['price'],
+          imageURL: value['imageURL'],
+        ));
+      });
+
+      this._products = loadedProduct;
+    } catch (error) {
+      print(error.toString());
+      throw error;
     }
   }
 }
