@@ -67,21 +67,22 @@ class ManageListItem extends StatelessWidget {
                   icon: Icon(Icons.delete),
                   iconSize: 20,
                   onPressed: () async {
-                    Future<bool> result = showDialog(
+                    bool isConfirmed = await showDialog(
                       context: context,
                       builder: (context) => AlertDialog(
                         title: Text('Confirm action'),
-                        content: Text('Are you sure to delete ${product.title}'),
+                        content: Text('Are you sure to delete \n${product.title}'),
                         actions: <Widget>[
                           FlatButton(
                             child: Text('Yes'),
                             onPressed: () => Navigator.of(context).pop(true),
                           ),
                           FlatButton(
-                            color: Theme.of(context).accentColor.withAlpha(96),
+                            color: Theme.of(context).primaryColor.withAlpha(64),
                             child: Text(
                               'No',
                               style: TextStyle(
+                                color: Theme.of(context).primaryColorDark,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -90,7 +91,11 @@ class ManageListItem extends StatelessWidget {
                         ],
                       ),
                     );
-                    print(await result);
+                    if (isConfirmed) {
+                      // listen false to prevent to rebuild  this widget,
+                      // upper widget is already consuming this provider.
+                      Provider.of<ProductsProvider>(context, listen: false).deleteProduct(product);
+                    }
                   },
                 ),
               ],
