@@ -43,13 +43,20 @@ class _EditPageState extends State<EditPage> {
     if (isValid) {
       _formKey.currentState.save();
 
+      // listen is false to prevent this page to rebuild by this provider.
       if (_editedProduct.id.isEmpty) {
+        // assign a id.
+        _editedProduct = Product(
+          id: DateTime.now().toString(),
+          title: _editedProduct.title,
+          description: _editedProduct.description,
+          price: _editedProduct.price,
+          imageURL: _editedProduct.imageURL,
+        );
         Provider.of<ProductsProvider>(context, listen: false).addProduct(_editedProduct);
       } else {
         Provider.of<ProductsProvider>(context, listen: false).patchProduct(_editedProduct);
       }
-
-      // listen is false to prevent this page to rebuild by this provider.
 
       // return to the previous page (ManagePage in this case).
       Navigator.of(context).pop();
