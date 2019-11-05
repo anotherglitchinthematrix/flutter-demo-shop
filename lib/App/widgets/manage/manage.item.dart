@@ -1,4 +1,5 @@
 import 'package:course_008/App/models/index.dart';
+import 'package:course_008/App/pages/index.dart';
 import 'package:flutter/material.dart';
 
 class ManageListItem extends StatelessWidget {
@@ -51,7 +52,14 @@ class ManageListItem extends StatelessWidget {
                 IconButton(
                   icon: Icon(Icons.edit),
                   iconSize: 20,
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.of(context).pushNamed(
+                      EditPage.routeName,
+                      arguments: EditPageArguments(
+                        product: product,
+                      ),
+                    );
+                  },
                 ),
                 IconButton(
                   icon: Icon(Icons.delete),

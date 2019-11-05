@@ -3,6 +3,14 @@ import 'package:course_008/App/providers/index.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+class EditPageArguments {
+  EditPageArguments({
+    this.product,
+  });
+
+  final Product product;
+}
+
 class EditPage extends StatefulWidget {
   static const routeName = 'edit';
   @override
@@ -14,17 +22,20 @@ class EditPage extends StatefulWidget {
 class _EditPageState extends State<EditPage> {
   final _formKey = GlobalKey<FormState>();
 
+  // a variable to store if the state is initialized.
+  bool _isInitialized = false;
+
   final _priceFocusNode = FocusNode();
   final _descriptionFocusNode = FocusNode();
   final _imageTextController = TextEditingController();
   final _imageFocusNode = FocusNode();
 
   Product _editedProduct = Product(
-    id: '',
-    title: '',
-    description: '',
-    imageURL: '',
-    price: 0,
+    id: null,
+    title: null,
+    description: null,
+    imageURL: null,
+    price: null,
   );
 
   void _saveForm() {
@@ -43,6 +54,7 @@ class _EditPageState extends State<EditPage> {
   @override
   void initState() {
     _imageFocusNode.addListener(_updateImageURL);
+
     super.initState();
   }
 
@@ -52,6 +64,20 @@ class _EditPageState extends State<EditPage> {
         // just call empty to inform.
       });
     }
+  }
+
+  // context is accessible here unlike the initState() and didChangeDependencies()
+  // fired right after initState() but before build().
+  @override
+  void didChangeDependencies() {
+    if (!_isInitialized) {
+      final argument = ModalRoute.of(context).settings.arguments as EditPageArguments;
+      if (argument != null) {
+        _editedProduct = argument.product;
+      }
+      _isInitialized = true;
+    }
+    super.didChangeDependencies();
   }
 
   @override
