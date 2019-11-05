@@ -11,8 +11,8 @@ class ProductsProvider with ChangeNotifier {
 
   List<Product> get list => _products;
 
-  void addProduct(Product product) {
-    http.post(url, body: product.toJson).then((response) {
+  Future<void> addProduct(Product product) {
+    return http.post(url, body: product.toJson).then((response) {
       var id = json.decode(response.body)['name'];
       product.id = id;
       _products.add(product);
