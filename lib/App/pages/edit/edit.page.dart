@@ -45,14 +45,6 @@ class _EditPageState extends State<EditPage> {
 
       // listen is false to prevent this page to rebuild by this provider.
       if (_editedProduct.id.isEmpty) {
-        // assign a id.
-        _editedProduct = Product(
-          id: DateTime.now().toString(),
-          title: _editedProduct.title,
-          description: _editedProduct.description,
-          price: _editedProduct.price,
-          imageURL: _editedProduct.imageURL,
-        );
         Provider.of<ProductsProvider>(context, listen: false).addProduct(_editedProduct);
       } else {
         Provider.of<ProductsProvider>(context, listen: false).patchProduct(_editedProduct);
@@ -124,13 +116,7 @@ class _EditPageState extends State<EditPage> {
                   return null;
                 },
                 onSaved: (value) {
-                  _editedProduct = Product(
-                    id: _editedProduct.id,
-                    title: value,
-                    description: _editedProduct.description,
-                    imageURL: _editedProduct.imageURL,
-                    price: _editedProduct.price,
-                  );
+                  _editedProduct.title = value;
                 },
                 // maxLength: 128,
                 // maxLengthEnforced: false,
@@ -157,13 +143,7 @@ class _EditPageState extends State<EditPage> {
                   return null;
                 },
                 onSaved: (value) {
-                  _editedProduct = Product(
-                    id: _editedProduct.id,
-                    title: _editedProduct.title,
-                    description: _editedProduct.description,
-                    imageURL: _editedProduct.imageURL,
-                    price: double.parse(value),
-                  );
+                  _editedProduct.price = double.parse(value);
                 },
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
@@ -188,13 +168,7 @@ class _EditPageState extends State<EditPage> {
                   return null;
                 },
                 onSaved: (value) {
-                  _editedProduct = Product(
-                    id: _editedProduct.id,
-                    title: _editedProduct.title,
-                    description: value,
-                    imageURL: _editedProduct.imageURL,
-                    price: _editedProduct.price,
-                  );
+                  _editedProduct.description = value;
                 },
                 maxLines: 3,
                 keyboardType: TextInputType.multiline,
@@ -232,13 +206,7 @@ class _EditPageState extends State<EditPage> {
                         return null;
                       },
                       onSaved: (value) {
-                        _editedProduct = Product(
-                          id: _editedProduct.id,
-                          title: _editedProduct.title,
-                          description: _editedProduct.description,
-                          imageURL: value,
-                          price: _editedProduct.price,
-                        );
+                        _editedProduct.imageURL = value;
                       },
                       decoration: InputDecoration(
                         labelText: 'Image URL',
