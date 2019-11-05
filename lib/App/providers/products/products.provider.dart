@@ -1,15 +1,32 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:course_008/App/models/index.dart';
 import 'package:course_008/App/dummy/index.dart';
 
 class ProductsProvider with ChangeNotifier {
+  String url = 'https://flutter-shop-a3a3e.firebaseio.com/products.json';
+
   List<Product> _products = [...dummyProducts];
 
   List<Product> get list => _products;
 
   void addProduct(Product product) {
-    _products.add(product);
-    notifyListeners();
+    http
+        .post(url,
+            body: json.encode({
+              'title': product.title,
+              'description': product.description,
+              'price': product.price,
+              'imageURL': product.imageURL,
+            }))
+        .then((response) {
+      var id = json.decode(response.body)['name'];
+      product.id = id;
+      _products.add(product);
+      // print(product.id);
+      notifyListeners();
+    });
   }
 
   void deleteProduct(Product product) {

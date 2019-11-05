@@ -1,11 +1,11 @@
 import 'package:flutter/foundation.dart';
 
 class Product {
-  final String id;
-  final String title;
-  final String description;
-  final double price;
-  final String imageURL;
+  String id;
+  String title;
+  String description;
+  double price;
+  String imageURL;
 
   Product({
     @required this.id,
