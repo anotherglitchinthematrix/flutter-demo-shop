@@ -62,9 +62,6 @@ class _EditPageState extends State<EditPage> {
           Navigator.of(context).pop();
         }).catchError((error) {
           this.isBusy = false;
-          //debug print
-          print(error.toString());
-
           showDialog(
             context: context,
             builder: (ctx) => AlertDialog(

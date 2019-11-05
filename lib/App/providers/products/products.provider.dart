@@ -11,16 +11,18 @@ class ProductsProvider with ChangeNotifier {
 
   List<Product> get list => _products;
 
-  Future<void> addProduct(Product product) {
-    return http.post(url, body: product.toJson).then((response) {
+  Future<void> addProduct(Product product) async {
+    //in async doesn't need to return.
+    try {
+      final response = await http.post(url, body: product.toJson);
       var id = json.decode(response.body)['name'];
       product.id = id;
       _products.add(product);
-      // print(product.id);
       notifyListeners();
-    }).catchError((error) {
-      throw error; // throw the error on method scope to catch anywhere else.
-    });
+    } catch (error) {
+      print(error.toString());
+      throw error;
+    }
   }
 
   void deleteProduct(Product product) {
