@@ -34,20 +34,19 @@ class ProductsProvider with ChangeNotifier {
     String url = 'https://flutter-shop-a3a3e.firebaseio.com/products/${product.id}.json';
 
     try {
-      await http.patch(
-        url,
-        body: product.toJson,
-      );
+      var index = _products.indexWhere((p) => p.id == product.id);
+      if (index != -1) {
+        await http.patch(
+          url,
+          body: product.toJson,
+        );
+        _products[index] = product;
+        notifyListeners();
+      }
     } catch (error) {
       print(error.toString());
       throw error;
     }
-
-    // var index = _products.indexWhere((p) => p.id == product.id);
-    // if (index != -1) {
-    //   _products[index] = product;
-    //   notifyListeners();
-    // }
   }
 
   Future<void> fetch() async {
