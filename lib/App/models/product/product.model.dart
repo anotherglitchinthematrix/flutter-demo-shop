@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:flutter/foundation.dart';
 
 class Product {
@@ -14,4 +15,13 @@ class Product {
     @required this.price,
     @required this.imageURL,
   });
+
+  String get toJson {
+    return json.encode({
+      'title': this.title,
+      'description': this.description,
+      'price': this.price,
+      'imageURL': this.imageURL,
+    });
+  }
 }
