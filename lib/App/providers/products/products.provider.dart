@@ -12,6 +12,11 @@ class ProductsProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  void deleteProduct(Product product) {
+    _products.remove(product);
+    notifyListeners();
+  }
+
   void patchProduct(Product product) {
     var index = _products.indexWhere((p) => p.id == product.id);
     if (index != -1) {

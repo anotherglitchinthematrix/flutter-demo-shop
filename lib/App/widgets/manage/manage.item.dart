@@ -1,6 +1,8 @@
 import 'package:course_008/App/models/index.dart';
 import 'package:course_008/App/pages/index.dart';
+import 'package:course_008/App/providers/index.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ManageListItem extends StatelessWidget {
   ManageListItem(this.product);
@@ -64,7 +66,32 @@ class ManageListItem extends StatelessWidget {
                 IconButton(
                   icon: Icon(Icons.delete),
                   iconSize: 20,
-                  onPressed: () {},
+                  onPressed: () async {
+                    Future<bool> result = showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        title: Text('Confirm action'),
+                        content: Text('Are you sure to delete ${product.title}'),
+                        actions: <Widget>[
+                          FlatButton(
+                            child: Text('Yes'),
+                            onPressed: () => Navigator.of(context).pop(true),
+                          ),
+                          FlatButton(
+                            color: Theme.of(context).accentColor.withAlpha(96),
+                            child: Text(
+                              'No',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            onPressed: () => Navigator.of(context).pop(false),
+                          ),
+                        ],
+                      ),
+                    );
+                    print(await result);
+                  },
                 ),
               ],
             ),
