@@ -31,11 +31,11 @@ class _EditPageState extends State<EditPage> {
   final _imageFocusNode = FocusNode();
 
   Product _editedProduct = Product(
-    id: null,
-    title: null,
-    description: null,
-    imageURL: null,
-    price: null,
+    id: '',
+    title: '',
+    description: '',
+    imageURL: '',
+    price: 0,
   );
 
   void _saveForm() {
@@ -74,6 +74,8 @@ class _EditPageState extends State<EditPage> {
       final argument = ModalRoute.of(context).settings.arguments as EditPageArguments;
       if (argument != null) {
         _editedProduct = argument.product;
+        // A textFormField with a external controller can't use initialValue so we have to assign like this.
+        _imageTextController.text = argument.product.imageURL;
       }
       _isInitialized = true;
     }
@@ -102,6 +104,7 @@ class _EditPageState extends State<EditPage> {
           child: ListView(
             children: <Widget>[
               TextFormField(
+                initialValue: _editedProduct.title,
                 validator: (value) {
                   if (value.isEmpty) {
                     return 'Please enter a title for the product';
@@ -128,6 +131,7 @@ class _EditPageState extends State<EditPage> {
               ),
               TextFormField(
                 // autovalidate: true,
+                initialValue: _editedProduct.price.toString(),
                 validator: (value) {
                   if (value.isEmpty) {
                     return 'Price can\'t be empty';
@@ -159,6 +163,7 @@ class _EditPageState extends State<EditPage> {
                 focusNode: _priceFocusNode,
               ),
               TextFormField(
+                initialValue: _editedProduct.description,
                 validator: (value) {
                   if (value.isEmpty) {
                     return 'Plase enter a description';
@@ -207,13 +212,11 @@ class _EditPageState extends State<EditPage> {
                   ),
                   Expanded(
                     child: TextFormField(
+                      // initialValue: _editedProduct.imageURL,
                       validator: (value) {
                         if (value.isEmpty) {
                           return 'Please enter a image URL';
                         }
-
-                        // if()
-
                         return null;
                       },
                       onSaved: (value) {
