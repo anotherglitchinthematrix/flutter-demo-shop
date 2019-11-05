@@ -20,8 +20,13 @@ class ManagePage extends StatelessWidget {
         ],
       ),
       drawer: AppDrawer(),
-      body: Consumer<ProductsProvider>(
-        builder: (context, products, _) => ManageList(products.list),
+      body: RefreshIndicator(
+        onRefresh: () {
+          return Provider.of<ProductsProvider>(context, listen: false).fetch();
+        },
+        child: Consumer<ProductsProvider>(
+          builder: (context, products, _) => ManageList(products.list),
+        ),
       ),
     );
   }
