@@ -34,6 +34,9 @@ class _EditPageState extends State<EditPage> {
 
       // listen is false to prevent this page to rebuild by this provider.
       Provider.of<ProductsProvider>(context, listen: false).addProduct(_editedProduct);
+
+      // return to the previous page (ManagePage in this case).
+      Navigator.of(context).pop();
     }
   }
 
