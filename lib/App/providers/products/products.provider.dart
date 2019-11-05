@@ -5,7 +5,7 @@ import 'package:course_008/App/models/index.dart';
 // import 'package:course_008/App/dummy/index.dart';
 
 class ProductsProvider with ChangeNotifier {
-  String url = 'https://flutter-shop-a3a3e.firebaseio.com/products.json';
+  String insertUrl = 'https://flutter-shop-a3a3e.firebaseio.com/products.json';
 
   List<Product> _products = [];
 
@@ -14,7 +14,7 @@ class ProductsProvider with ChangeNotifier {
   Future<void> addProduct(Product product) async {
     //in async doesn't need to return.
     try {
-      final response = await http.post(url, body: product.toJson);
+      final response = await http.post(insertUrl, body: product.toJson);
       var id = json.decode(response.body)['name'];
       product.id = id;
       _products.add(product);
@@ -30,17 +30,29 @@ class ProductsProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void patchProduct(Product product) {
-    var index = _products.indexWhere((p) => p.id == product.id);
-    if (index != -1) {
-      _products[index] = product;
-      notifyListeners();
+  Future<void> patchProduct(Product product) async {
+    String url = 'https://flutter-shop-a3a3e.firebaseio.com/products/${product.id}.json';
+
+    try {
+      await http.patch(
+        url,
+        body: product.toJson,
+      );
+    } catch (error) {
+      print(error.toString());
+      throw error;
     }
+
+    // var index = _products.indexWhere((p) => p.id == product.id);
+    // if (index != -1) {
+    //   _products[index] = product;
+    //   notifyListeners();
+    // }
   }
 
   Future<void> fetch() async {
     try {
-      final response = await http.get(url);
+      final response = await http.get(insertUrl);
       final extracted = json.decode(response.body) as Map<String, dynamic>;
       final List<Product> loadedProduct = [];
       extracted.forEach((key, value) {

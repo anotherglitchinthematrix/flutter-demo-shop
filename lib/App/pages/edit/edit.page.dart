@@ -48,35 +48,29 @@ class _EditPageState extends State<EditPage> {
     price: 0,
   );
 
-  void _saveForm() {
+  void _saveForm() async {
     final isValid = _formKey.currentState.validate();
     if (isValid) {
       this.isBusy = true;
       _formKey.currentState.save();
+      try {
+        if (_editedProduct.id.isEmpty) {
+          await Provider.of<ProductsProvider>(context, listen: false).addProduct(_editedProduct);
+        } else {
+          await Provider.of<ProductsProvider>(context, listen: false).patchProduct(_editedProduct);
+        }
 
-      // listen is false to prevent this page to rebuild by this provider.
-      if (_editedProduct.id.isEmpty) {
-        Provider.of<ProductsProvider>(context, listen: false).addProduct(_editedProduct).then((_) {
-          this.isBusy = false;
-          // if eveything is fine just return to the previos page, it's manage page in this case.
-          Navigator.of(context).pop();
-        }).catchError((error) {
-          this.isBusy = false;
-          showDialog(
-            context: context,
-            builder: (ctx) => AlertDialog(
-              title: Text('An error occured'),
-              content: Text('Something went wrong try again later.'),
-            ),
-          );
-        });
-      } else {
-        // this.isBusy = false;
-        Provider.of<ProductsProvider>(context, listen: false).patchProduct(_editedProduct);
+        this.isBusy = false;
+        Navigator.of(context).pop();
+      } catch (error) {
+        showDialog(
+          context: context,
+          builder: (ctx) => AlertDialog(
+            title: Text('An error occured'),
+            content: Text('Something went wrong try again later.'),
+          ),
+        );
       }
-
-      // return to the previous page (ManagePage in this case).
-      // Navigator.of(context).pop();
     }
   }
 
