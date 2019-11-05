@@ -10,7 +10,7 @@ class EditPage extends StatefulWidget {
 }
 
 class _EditPageState extends State<EditPage> {
-  final formKey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>();
 
   final _priceFocusNode = FocusNode();
   final _descriptionFocusNode = FocusNode();
@@ -26,7 +26,7 @@ class _EditPageState extends State<EditPage> {
   );
 
   void _saveForm() {
-    formKey.currentState.save();
+    _formKey.currentState.save();
     print(_editedProduct.id);
     print(_editedProduct.title);
     print(_editedProduct.description);
@@ -60,10 +60,12 @@ class _EditPageState extends State<EditPage> {
           ),
         ],
       ),
+      // I preferred using onSaved instead of onFieldSubmitted because onSaved is triggered only when the formstate is saved.
+      // but onFieldSubmitted will be triggered everytime when the enter key is pressed on the keyboard.
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Form(
-          key: formKey,
+          key: _formKey,
           child: ListView(
             children: <Widget>[
               TextFormField(
