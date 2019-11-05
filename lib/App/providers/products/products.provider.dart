@@ -18,6 +18,8 @@ class ProductsProvider with ChangeNotifier {
       _products.add(product);
       // print(product.id);
       notifyListeners();
+    }).catchError((error) {
+      throw error; // throw the error on method scope to catch anywhere else.
     });
   }
 

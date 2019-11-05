@@ -58,7 +58,20 @@ class _EditPageState extends State<EditPage> {
       if (_editedProduct.id.isEmpty) {
         Provider.of<ProductsProvider>(context, listen: false).addProduct(_editedProduct).then((_) {
           this.isBusy = false;
+          // if eveything is fine just return to the previos page, it's manage page in this case.
           Navigator.of(context).pop();
+        }).catchError((error) {
+          this.isBusy = false;
+          //debug print
+          print(error.toString());
+
+          showDialog(
+            context: context,
+            builder: (ctx) => AlertDialog(
+              title: Text('An error occured'),
+              content: Text('Something went wrong try again later.'),
+            ),
+          );
         });
       } else {
         // this.isBusy = false;
