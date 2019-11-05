@@ -73,6 +73,7 @@ class CartListItem extends StatelessWidget {
                 borderRadius: BorderRadius.circular(4),
                 child: Container(
                   width: 48,
+                  height: double.infinity,
                   child: Image.network(
                     product.imageURL,
                     fit: BoxFit.cover,

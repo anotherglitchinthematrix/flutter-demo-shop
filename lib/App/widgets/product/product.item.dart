@@ -50,6 +50,7 @@ class ProductGridItem extends StatelessWidget {
                             children: <Widget>[
                               Container(
                                 width: double.infinity,
+                                height: double.infinity,
                                 child: Image.network(
                                   product.imageURL,
                                   fit: BoxFit.cover,
@@ -79,9 +80,9 @@ class ProductGridItem extends StatelessWidget {
                                       filter: ui.ImageFilter.blur(sigmaX: 8, sigmaY: 8),
                                       child: Container(
                                         width: double.infinity,
-                                        color: Theme.of(context).primaryColor.withAlpha(48),
+                                        color: Colors.black.withAlpha(128),
                                         child: Padding(
-                                          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
+                                          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
                                           child: Container(
                                             child: Row(
                                               children: [
@@ -96,27 +97,29 @@ class ProductGridItem extends StatelessWidget {
                                                         style: TextStyle(
                                                           fontSize: 18,
                                                           fontWeight: FontWeight.w500,
-                                                          color: Theme.of(context).primaryColorDark,
+                                                          color: Theme.of(context).primaryColorLight,
                                                         ),
                                                       ),
                                                       Text(
                                                         product.description,
                                                         style: TextStyle(
                                                           fontSize: 14,
-                                                          color: Theme.of(context).primaryColorDark,
+                                                          color: Theme.of(context).primaryColorLight,
                                                         ),
                                                       ),
                                                     ],
                                                   ),
                                                 ),
                                                 FlatButton.icon(
+                                                  highlightColor: Theme.of(context).primaryColorLight.withAlpha(12),
+                                                  splashColor: Theme.of(context).primaryColorLight.withAlpha(24),
                                                   icon: Icon(
                                                     Icons.add_shopping_cart,
-                                                    color: Theme.of(context).primaryColorDark,
+                                                    color: Theme.of(context).primaryColorLight,
                                                   ),
                                                   label: Text('Add',
                                                       style: TextStyle(
-                                                        color: Theme.of(context).primaryColorDark,
+                                                        color: Theme.of(context).primaryColorLight,
                                                       )),
                                                   onPressed: () {
                                                     cart.add(product);
