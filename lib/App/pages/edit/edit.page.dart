@@ -1,5 +1,7 @@
 import 'package:course_008/App/models/index.dart';
+import 'package:course_008/App/providers/index.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class EditPage extends StatefulWidget {
   static const routeName = 'edit';
@@ -29,11 +31,9 @@ class _EditPageState extends State<EditPage> {
     final isValid = _formKey.currentState.validate();
     if (isValid) {
       _formKey.currentState.save();
-      print(_editedProduct.id);
-      print(_editedProduct.title);
-      print(_editedProduct.description);
-      print(_editedProduct.price);
-      print(_editedProduct.imageURL);
+
+      // listen is false to prevent this page to rebuild by this provider.
+      Provider.of<ProductsProvider>(context, listen: false).addProduct(_editedProduct);
     }
   }
 
@@ -53,6 +53,7 @@ class _EditPageState extends State<EditPage> {
 
   @override
   Widget build(BuildContext context) {
+    debugPrint('rebuild test with provider listen:false');
     return Scaffold(
       appBar: AppBar(
         title: Text('Add Product'),
@@ -224,5 +225,6 @@ class _EditPageState extends State<EditPage> {
     _imageFocusNode.removeListener(_updateImageURL);
     _imageFocusNode.dispose();
     super.dispose();
+    debugPrint('disposing done!');
   }
 }
