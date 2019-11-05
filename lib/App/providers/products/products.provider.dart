@@ -11,4 +11,12 @@ class ProductsProvider with ChangeNotifier {
     _products.add(product);
     notifyListeners();
   }
+
+  void patchProduct(Product product) {
+    var index = _products.indexWhere((p) => p.id == product.id);
+    if (index != -1) {
+      _products[index] = product;
+      notifyListeners();
+    }
+  }
 }
