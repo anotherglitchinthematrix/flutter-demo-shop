@@ -84,7 +84,7 @@ class _OrderButtonState extends State<OrderButton> {
       textColor: Theme.of(context).primaryColorDark,
       splashColor: Theme.of(context).primaryColor.withAlpha(96),
       highlightColor: Colors.transparent,
-      onPressed: (widget.cart.list.length == 0 || isLoading)
+      onPressed: (widget.cart.list.isEmpty || isLoading)
           ? null
           : () async {
               isLoading = true;
