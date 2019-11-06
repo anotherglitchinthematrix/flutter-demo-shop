@@ -71,7 +71,7 @@ class FavoritesProvider with ChangeNotifier {
     var entry = _favorites.entries.firstWhere((e) => e.value == id);
     _favorites.remove(entry.key);
 
-    print(entry);
+    // print(entry);
     String url = "https://flutter-shop-a3a3e.firebaseio.com/favorites/${entry.key}.json";
 
     http.delete(url).then((response) {

@@ -68,11 +68,10 @@ class OrderProvider with ChangeNotifier {
         ));
       });
 
-      _orders = loadedList.toList();
       // using with futurebuilder and notifylistener causing infinite loop, be aware.
       // notifyListeners();
     }
-
+    _orders = loadedList.toList();
     // print('döne');
   }
 
