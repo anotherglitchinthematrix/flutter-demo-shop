@@ -3,36 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:course_008/App/widgets/index.dart';
 import 'package:provider/provider.dart';
 
-class OrderPage extends StatefulWidget {
-  static const routeName = "order";
-
-  @override
-  _OrderPageState createState() => _OrderPageState();
-}
-
-class _OrderPageState extends State<OrderPage> {
-  bool _isLoading = false;
-
-  bool get isLoading => _isLoading;
-
-  set isLoading(bool v) {
-    setState(() {
-      _isLoading = v;
-    });
-  }
-
-  @override
-  void initState() {
-    Future.delayed(Duration.zero).then((_) async {
-      isLoading = true;
-      await Provider.of<OrderProvider>(context, listen: false).fetch();
-      isLoading = false;
-    });
-    super.initState();
-  }
-
+class OrderPage extends StatelessWidget {
+  static const routeName = 'orders';
   @override
   Widget build(BuildContext context) {
+    print('build');
     return Scaffold(
       drawer: AppDrawer(),
       appBar: AppBar(
@@ -40,7 +15,20 @@ class _OrderPageState extends State<OrderPage> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: isLoading ? Center(child: CircularProgressIndicator()) : OrderList(),
+        child: FutureBuilder(
+          future: Provider.of<OrderProvider>(context, listen: false).fetch(),
+          builder: (context, snapshot) {
+            // return;
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(child: CircularProgressIndicator());
+            } else {
+              if (snapshot.error != null) {
+                return Text('An error occured during fetching the order data.');
+              }
+              return OrderList();
+            }
+          },
+        ),
       ),
     );
   }

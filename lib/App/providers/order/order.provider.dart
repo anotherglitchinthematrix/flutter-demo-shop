@@ -69,8 +69,11 @@ class OrderProvider with ChangeNotifier {
       });
 
       _orders = loadedList.toList();
-      notifyListeners();
+      // using with futurebuilder and notifylistener causing infinite loop, be aware.
+      // notifyListeners();
     }
+
+    // print('döne');
   }
 
   Future<void> place(List<CartItem> cart, double total) async {
