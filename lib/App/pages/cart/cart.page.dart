@@ -1,4 +1,5 @@
 // import 'package:course_008/App/pages/order/order.page.dart';
+import 'package:course_008/App/pages/index.dart';
 import 'package:course_008/App/widgets/index.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -90,6 +91,8 @@ class _OrderButtonState extends State<OrderButton> {
               await Provider.of<OrderProvider>(context, listen: false).place(widget.cart.list, widget.cart.totalAmount);
               isLoading = false;
               widget.cart.clear();
+              Navigator.pushReplacementNamed(context, OrderPage.routeName);
+
               // Place the order.
               // var isCompleted = Provider.of<OrderProvider>(context, listen: false).order(
               //   cart.list,
@@ -97,7 +100,6 @@ class _OrderButtonState extends State<OrderButton> {
               // );
               // if (isCompleted) {
               //   cart.clear();
-              //   Navigator.pushReplacementNamed(context, OrderPage.routeName);
               // }
             },
       icon: isLoading

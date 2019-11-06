@@ -30,9 +30,11 @@ class FavoritesProvider with ChangeNotifier {
 
       var favorites = json.decode(response.body) as Map<String, dynamic>;
 
-      favorites.forEach((key, value) {
-        _favorites[key] = value;
-      });
+      if (favorites != null) {
+        favorites.forEach((key, value) {
+          _favorites[key] = value;
+        });
+      }
     } catch (error) {
       throw error;
     }

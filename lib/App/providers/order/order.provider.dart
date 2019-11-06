@@ -55,36 +55,38 @@ class OrderProvider with ChangeNotifier {
     final List<OrderItem> loadedList = [];
 
     final extractedData = json.decode(response.body) as Map<String, dynamic>;
-    // print();
-    extractedData.forEach((orderId, orderData) {
-      loadedList.add(OrderItem(
-        id: orderId,
-        date: DateTime.parse(orderData['date']),
-        total: orderData['total'],
-        cart: (orderData['cart'] as List<dynamic>).map((m) {
-          var data = json.decode(m);
-          var product = json.decode(data['product']);
-          var quantity = data['quantity'];
 
-          return CartItem(
-            id: '',
-            product: Product(
-              id: product['id'],
-              title: product['title'],
-              description: product['description'],
-              price: product['price'],
-              imageURL: product['imageURL'],
-            ),
-            quantity: quantity,
-          );
+    if (extractedData != null) {
+      extractedData.forEach((orderId, orderData) {
+        loadedList.add(OrderItem(
+          id: orderId,
+          date: DateTime.parse(orderData['date']),
+          total: orderData['total'],
+          cart: (orderData['cart'] as List<dynamic>).map((m) {
+            var data = json.decode(m);
+            var product = json.decode(data['product']);
+            var quantity = data['quantity'];
 
-          // print(item['id']);
-        }).toList(),
-      ));
-    });
+            return CartItem(
+              id: '',
+              product: Product(
+                id: product['id'],
+                title: product['title'],
+                description: product['description'],
+                price: product['price'],
+                imageURL: product['imageURL'],
+              ),
+              quantity: quantity,
+            );
 
-    _orders = loadedList;
-    notifyListeners();
+            // print(item['id']);
+          }).toList(),
+        ));
+      });
+
+      _orders = loadedList;
+      notifyListeners();
+    }
   }
 
   Future<void> place(List<CartItem> cart, double total) async {
