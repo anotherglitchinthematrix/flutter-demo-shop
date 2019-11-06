@@ -84,7 +84,7 @@ class OrderProvider with ChangeNotifier {
         ));
       });
 
-      _orders = loadedList;
+      _orders = loadedList.reversed.toList();
       notifyListeners();
     }
   }
