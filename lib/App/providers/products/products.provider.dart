@@ -76,7 +76,8 @@ class ProductsProvider with ChangeNotifier {
 
       this._products = loadedProduct;
       // prevenet empty page on hot-reload.
-      notifyListeners();
+      // using this with futurebuilder causes a loop call.
+      // notifyListeners();
     } catch (error) {
       print(error.toString());
       throw error;
