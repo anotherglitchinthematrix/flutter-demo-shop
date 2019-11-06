@@ -32,22 +32,6 @@ class OrderProvider with ChangeNotifier {
 
   List<OrderItem> get list => _orders;
 
-  bool order(List<CartItem> cart, double total) {
-    if (cart.length > 0) {
-      _orders.add(OrderItem(
-        id: DateTime.now().toString(),
-        cart: cart,
-        total: total,
-        date: DateTime.now(),
-      ));
-
-      notifyListeners();
-
-      return true;
-    }
-    return false;
-  }
-
   Future<void> fetch() async {
     const url = 'https://flutter-shop-a3a3e.firebaseio.com/orders.json';
     final response = await http.get(url);
@@ -84,7 +68,7 @@ class OrderProvider with ChangeNotifier {
         ));
       });
 
-      _orders = loadedList.reversed.toList();
+      _orders = loadedList.toList();
       notifyListeners();
     }
   }
