@@ -1,4 +1,4 @@
-import 'dart:ui' as prefix0;
+import 'dart:ui';
 
 import 'package:course_008/App/models/index.dart';
 import 'package:course_008/App/providers/index.dart';
@@ -246,7 +246,7 @@ class _EditPageState extends State<EditPage> {
             ),
             if (isBusy)
               BackdropFilter(
-                filter: prefix0.ImageFilter.blur(sigmaX: 8, sigmaY: 8),
+                filter: ImageFilter.blur(sigmaX: 8, sigmaY: 8),
                 child: Center(child: CircularProgressIndicator()),
               ),
           ],
