@@ -35,6 +35,7 @@ class FavoritesProvider with ChangeNotifier {
           _favorites[key] = value;
         });
       }
+      // notifyListeners();
     } catch (error) {
       throw error;
     }

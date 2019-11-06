@@ -64,17 +64,24 @@ class ProductsProvider with ChangeNotifier {
       final response = await http.get(insertUrl);
       final extracted = json.decode(response.body) as Map<String, dynamic>;
       final List<Product> loadedProduct = [];
-      extracted.forEach((key, value) {
-        loadedProduct.add(Product(
-          id: key,
-          title: value['title'],
-          description: value['description'],
-          price: value['price'],
-          imageURL: value['imageURL'],
-        ));
-      });
 
-      this._products = loadedProduct;
+      if (extracted['error'] != null) {
+        throw HttpException(extracted['error']);
+      }
+
+      if (extracted != null) {
+        extracted.forEach((key, value) {
+          loadedProduct.add(Product(
+            id: key,
+            title: value['title'],
+            description: value['description'],
+            price: value['price'],
+            imageURL: value['imageURL'],
+          ));
+        });
+      }
+
+      _products = loadedProduct;
       // prevenet empty page on hot-reload.
       // using this with futurebuilder causes a loop call.
       // notifyListeners();
