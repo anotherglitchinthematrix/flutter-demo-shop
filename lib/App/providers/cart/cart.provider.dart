@@ -42,7 +42,7 @@ class CartProvider with ChangeNotifier {
     /// if it's present return the item.
     /// if it's not present create and return the item.
     CartItem item = _list.firstWhere(
-      (item) => item.product == product,
+      (item) => item.product.id == product.id,
       orElse: () {
         CartItem _item = CartItem(
           id: DateTime.now().toString(),
