@@ -75,6 +75,8 @@ class ProductsProvider with ChangeNotifier {
       });
 
       this._products = loadedProduct;
+      // prevenet empty page on hot-reload.
+      notifyListeners();
     } catch (error) {
       print(error.toString());
       throw error;
