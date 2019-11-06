@@ -28,7 +28,7 @@ class FavoritesProvider with ChangeNotifier {
       const url = 'https://flutter-shop-a3a3e.firebaseio.com/favorites.json';
       var response = await http.get(url);
 
-      var favorites = json.decode(response.body) as Map<String, String>;
+      var favorites = json.decode(response.body) as Map<String, dynamic>;
 
       favorites.forEach((key, value) {
         _favorites[key] = value;
@@ -66,18 +66,20 @@ class FavoritesProvider with ChangeNotifier {
   }
 
   void _remove(String id) {
-    var entry = _favorites.entries.firstWhere((e) => e.key == id);
+    var entry = _favorites.entries.firstWhere((e) => e.value == id);
     _favorites.remove(entry.key);
 
-    // print(entry);
-    // String url = "https://flutter-shop-a3a3e.firebaseio.com/favorites/${entry.key}.json";
+    print(entry);
+    String url = "https://flutter-shop-a3a3e.firebaseio.com/favorites/${entry.key}.json";
 
-    // http.delete(url).catchError((_) {
-    //   _favorites
-    // });
-
-    // _favorites.remove(id);
-
-    // http.delete(url);
+    http.delete(url).then((response) {
+      if (response.statusCode >= 400) {
+        throw HttpException('Couldn\'t remove from favorites');
+      }
+    }).catchError((_) {
+      // on Error re-add.
+      _favorites[entry.key] = entry.value;
+      notifyListeners();
+    });
   }
 }

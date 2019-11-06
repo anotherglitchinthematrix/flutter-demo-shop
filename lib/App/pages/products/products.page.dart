@@ -36,6 +36,7 @@ class _ProductsPageState extends State<ProductsPage> {
     if (!isInitialized) {
       isLoading = true;
       Provider.of<ProductsProvider>(context).fetch().then((_) => isLoading = false);
+      Provider.of<FavoritesProvider>(context).fetch();
 
       isInitialized = true;
     }
