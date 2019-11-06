@@ -11,10 +11,22 @@ class OrderPage extends StatefulWidget {
 }
 
 class _OrderPageState extends State<OrderPage> {
+  bool _isLoading = false;
+
+  bool get isLoading => _isLoading;
+
+  set isLoading(bool v) {
+    setState(() {
+      _isLoading = v;
+    });
+  }
+
   @override
   void initState() {
-    Future.delayed(Duration.zero).then((_) {
-      Provider.of<OrderProvider>(context, listen: false).fetch();
+    Future.delayed(Duration.zero).then((_) async {
+      isLoading = true;
+      await Provider.of<OrderProvider>(context, listen: false).fetch();
+      isLoading = false;
     });
     super.initState();
   }
@@ -28,7 +40,7 @@ class _OrderPageState extends State<OrderPage> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: OrderList(),
+        child: isLoading ? Center(child: CircularProgressIndicator()) : OrderList(),
       ),
     );
   }
