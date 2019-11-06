@@ -24,4 +24,14 @@ class Product {
       'imageURL': this.imageURL,
     });
   }
+
+  String get toJsonWithId {
+    return json.encode({
+      'id': this.id,
+      'title': this.title,
+      'description': this.description,
+      'price': this.price,
+      'imageURL': this.imageURL,
+    });
+  }
 }

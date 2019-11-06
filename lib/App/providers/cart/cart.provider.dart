@@ -1,4 +1,6 @@
 // import 'package:course_008/App/dummy/cart/cart.dummy.dart';
+import 'dart:convert';
+
 import 'package:course_008/App/models/index.dart';
 import 'package:flutter/material.dart';
 
@@ -12,6 +14,13 @@ class CartItem {
   final String id;
   final Product product;
   int quantity;
+
+  String get toJson {
+    return json.encode({
+      'product': this.product.toJsonWithId,
+      'quantity': this.quantity,
+    });
+  }
 }
 
 class CartProvider with ChangeNotifier {

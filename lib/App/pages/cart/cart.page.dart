@@ -1,4 +1,4 @@
-import 'package:course_008/App/pages/order/order.page.dart';
+// import 'package:course_008/App/pages/order/order.page.dart';
 import 'package:course_008/App/widgets/index.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -24,29 +24,7 @@ class CartPage extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    FlatButton.icon(
-                      color: Theme.of(context).primaryColor.withAlpha(48),
-                      textColor: Theme.of(context).primaryColorDark,
-                      splashColor: Theme.of(context).primaryColor.withAlpha(96),
-                      highlightColor: Colors.transparent,
-                      onPressed: () {
-                        // Place the order.
-                        var isCompleted = Provider.of<OrderProvider>(context, listen: false).order(
-                          cart.list,
-                          cart.totalAmount,
-                        );
-                        if (isCompleted) {
-                          cart.clear();
-                          Navigator.pushReplacementNamed(context, OrderPage.routeName);
-                        }
-                      },
-                      icon: Icon(
-                        Icons.payment,
-                      ),
-                      label: Text(
-                        'Order Now',
-                      ),
-                    ),
+                    OrderButton(cart),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: <Widget>[
@@ -74,6 +52,64 @@ class CartPage extends StatelessWidget {
             cart.isEmpty ? _EmptyState() : CartList(cart),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class OrderButton extends StatefulWidget {
+  const OrderButton(this.cart, {Key key}) : super(key: key);
+
+  final CartProvider cart;
+
+  @override
+  _OrderButtonState createState() => _OrderButtonState();
+}
+
+class _OrderButtonState extends State<OrderButton> {
+  bool _isLoading = false;
+
+  bool get isLoading => _isLoading;
+  set isLoading(bool v) {
+    setState(() {
+      _isLoading = v;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return FlatButton.icon(
+      color: Theme.of(context).primaryColor.withAlpha(48),
+      textColor: Theme.of(context).primaryColorDark,
+      splashColor: Theme.of(context).primaryColor.withAlpha(96),
+      highlightColor: Colors.transparent,
+      onPressed: (widget.cart.list.length == 0 || isLoading)
+          ? null
+          : () async {
+              isLoading = true;
+              await Provider.of<OrderProvider>(context, listen: false).place(widget.cart.list, widget.cart.totalAmount);
+              isLoading = false;
+              widget.cart.clear();
+              // Place the order.
+              // var isCompleted = Provider.of<OrderProvider>(context, listen: false).order(
+              //   cart.list,
+              //   cart.totalAmount,
+              // );
+              // if (isCompleted) {
+              //   cart.clear();
+              //   Navigator.pushReplacementNamed(context, OrderPage.routeName);
+              // }
+            },
+      icon: isLoading
+          ? Container(
+              width: 18,
+              height: 18,
+              child: CircularProgressIndicator(
+                strokeWidth: 3,
+              ))
+          : Icon(Icons.payment),
+      label: Text(
+        'Order Now',
       ),
     );
   }
