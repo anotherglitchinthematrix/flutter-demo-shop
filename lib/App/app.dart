@@ -26,7 +26,7 @@ class App extends StatelessWidget {
           fontFamily: 'Inter',
           primarySwatch: Colors.blueGrey,
         ),
-        home: ProductsPage(),
+        home: AuthenticationPage(),
         routes: {
           ProductsPage.routeName: (context) => ProductsPage(),
           ProductPage.routeName: (context) => ProductPage(),
