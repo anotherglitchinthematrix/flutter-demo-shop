@@ -8,6 +8,9 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider<AuthenticationProvider>.value(
+          value: AuthenticationProvider(),
+        ),
         ChangeNotifierProvider<ProductsProvider>.value(
           value: ProductsProvider(),
         ),

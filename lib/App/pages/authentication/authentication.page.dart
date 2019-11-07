@@ -1,6 +1,8 @@
 import 'dart:ui';
-
+import 'package:course_008/App/models/index.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:course_008/App/providers/index.dart';
 
 class AuthData {
   String mail;
@@ -68,7 +70,7 @@ class _AuthenticationFormState extends State<AuthenticationForm> {
     });
   }
 
-  void _action() async {
+  Future<void> _action() async {
     if (!_formKey.currentState.validate()) {
       return;
     }
@@ -76,15 +78,49 @@ class _AuthenticationFormState extends State<AuthenticationForm> {
     // trigger the onSave methods of the TextFormFields
     _formKey.currentState.save();
     isLoading = true;
-    await Future.delayed(Duration(seconds: 4));
-    switch (_state) {
-      case AuthState.SignIn:
-        print('Sign in action');
-        break;
-      case AuthState.SignUp:
-        print('Sign up action');
-        break;
+    // test delay
+    await Future.delayed(Duration(milliseconds: 600));
+    try {
+      switch (_state) {
+        case AuthState.SignIn:
+          // print('Sign in action');
+          await Provider.of<AuthenticationProvider>(context, listen: false).signIn(_data.mail, _data.password);
+          break;
+        case AuthState.SignUp:
+          // print('Sign up action');
+          await Provider.of<AuthenticationProvider>(context, listen: false).signUp(_data.mail, _data.password);
+          break;
+      }
+    } on HttpException catch (error) {
+      String errorMessage = 'Authentication Failed';
+
+      if (error.message.contains('EMAIL_EXISTS')) {
+        errorMessage = 'This email already signed up.';
+      } else if (error.message.contains('EMAIL_NOT_FOUND')) {
+        errorMessage = 'Couldn\'t find a user with the given email.';
+      } else if (error.message.contains('INVALID_PASSWORD')) {
+        errorMessage = 'Couldn\'t find a user with these credentials.';
+      } else if (error.message.contains('USER_DISABLED')) {
+        errorMessage = 'Your account is suspended.';
+      }
+
+      showDialog(
+        context: context,
+        builder: (_) => SimpleDialog(
+          backgroundColor: Colors.red.shade50,
+          contentPadding: EdgeInsets.all(16),
+          children: <Widget>[
+            Center(
+              child: Text(errorMessage,
+                  style: TextStyle(
+                    color: Colors.red.shade800,
+                  )),
+            ),
+          ],
+        ),
+      );
     }
+
     isLoading = false;
   }
 
