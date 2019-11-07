@@ -5,16 +5,19 @@ import 'package:course_008/App/models/index.dart';
 // import 'package:course_008/App/dummy/index.dart';
 
 class ProductsProvider with ChangeNotifier {
-  String insertUrl = 'https://flutter-shop-a3a3e.firebaseio.com/products.json';
+  ProductsProvider(this.authenticationToken);
+
+  String authenticationToken;
 
   List<Product> _products = [];
 
   List<Product> get list => _products;
 
   Future<void> addProduct(Product product) async {
+    final url = 'https://flutter-shop-a3a3e.firebaseio.com/products.json?auth=$authenticationToken';
     //in async doesn't need to return.
     try {
-      final response = await http.post(insertUrl, body: product.toJson);
+      final response = await http.post(url, body: product.toJson);
       var id = json.decode(response.body)['name'];
       product.id = id;
       _products.add(product);
@@ -26,7 +29,7 @@ class ProductsProvider with ChangeNotifier {
   }
 
   Future<void> deleteProduct(Product product) async {
-    String url = 'https://flutter-shop-a3a3e.firebaseio.com/products/${product.id}.json';
+    String url = 'https://flutter-shop-a3a3e.firebaseio.com/products/${product.id}.json?auth=$authenticationToken';
 
     _products.remove(product);
     notifyListeners();
@@ -41,7 +44,7 @@ class ProductsProvider with ChangeNotifier {
   }
 
   Future<void> patchProduct(Product product) async {
-    String url = 'https://flutter-shop-a3a3e.firebaseio.com/products/${product.id}.json';
+    String url = 'https://flutter-shop-a3a3e.firebaseio.com/products/${product.id}.json?auth=$authenticationToken';
 
     try {
       var index = _products.indexWhere((p) => p.id == product.id);
