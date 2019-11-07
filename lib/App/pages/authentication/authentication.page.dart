@@ -108,6 +108,7 @@ class _AuthenticationFormState extends State<AuthenticationForm> {
                     Padding(
                       padding: const EdgeInsets.all(8),
                       child: TextFormField(
+                        enabled: !_isLoading,
                         onSaved: (value) => _data.mail = value,
                         validator: (value) {
                           // W3C e-mail pattern.
@@ -139,6 +140,7 @@ class _AuthenticationFormState extends State<AuthenticationForm> {
                         children: <Widget>[
                           Expanded(
                             child: TextFormField(
+                              enabled: !_isLoading,
                               onSaved: (value) => _data.password = value,
                               validator: (value) {
                                 RegExp pattern = RegExp(r"^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})");
@@ -196,6 +198,7 @@ class _AuthenticationFormState extends State<AuthenticationForm> {
                           Padding(
                             padding: const EdgeInsets.all(8),
                             child: TextFormField(
+                              enabled: !_isLoading,
                               validator: (value) {
                                 if (_passwordController.text != value) {
                                   return 'Doesn\'t match.';
@@ -226,7 +229,7 @@ class _AuthenticationFormState extends State<AuthenticationForm> {
                           color: Theme.of(context).primaryColor,
                         ),
                       ),
-                      onPressed: _action,
+                      onPressed: !_isLoading ? _action : null,
                     ),
                   ],
                 ),
@@ -252,18 +255,20 @@ class _AuthenticationFormState extends State<AuthenticationForm> {
               fontSize: 12,
             ),
           ),
-          onPressed: () {
-            setState(() {
-              switch (_state) {
-                case AuthState.SignIn:
-                  _state = AuthState.SignUp;
-                  break;
-                case AuthState.SignUp:
-                  _state = AuthState.SignIn;
-                  break;
-              }
-            });
-          },
+          onPressed: _isLoading
+              ? null
+              : () {
+                  setState(() {
+                    switch (_state) {
+                      case AuthState.SignIn:
+                        _state = AuthState.SignUp;
+                        break;
+                      case AuthState.SignUp:
+                        _state = AuthState.SignIn;
+                        break;
+                    }
+                  });
+                },
         ),
       ],
     );
