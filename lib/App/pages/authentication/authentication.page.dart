@@ -1,4 +1,13 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
+
+class AuthData {
+  String mail;
+  String password;
+
+  AuthData({this.mail, this.password});
+}
 
 enum AuthState { SignIn, SignUp }
 
@@ -44,15 +53,24 @@ class _AuthenticationFormState extends State<AuthenticationForm> {
   var _passwordController = TextEditingController();
   var _passwordVisible = false;
   var _state = AuthState.SignIn;
+  var _isLoading = false;
+  var _data = AuthData();
 
-  void _action() {
+  set isLoading(bool v) {
+    setState(() {
+      _isLoading = v;
+    });
+  }
+
+  void _action() async {
     if (!_formKey.currentState.validate()) {
       return;
     }
 
     // trigger the onSave methods of the TextFormFields
     _formKey.currentState.save();
-
+    isLoading = true;
+    await Future.delayed(Duration(seconds: 4));
     switch (_state) {
       case AuthState.SignIn:
         print('Sign in action');
@@ -61,6 +79,7 @@ class _AuthenticationFormState extends State<AuthenticationForm> {
         print('Sign up action');
         break;
     }
+    isLoading = false;
   }
 
   @override
@@ -82,129 +101,145 @@ class _AuthenticationFormState extends State<AuthenticationForm> {
           ),
           child: Form(
             key: _formKey,
-            child: Column(
+            child: Stack(
               children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.all(8),
-                  child: TextFormField(
-                    validator: (value) {
-                      // W3C e-mail pattern.
-                      RegExp pattern = RegExp(
-                          r"^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$");
-                      if (!pattern.hasMatch(value)) {
-                        print('test');
-                        return 'Please provide a correct e-mail address.';
-                      }
-                      return null;
-                    },
-                    decoration: InputDecoration(
-                      contentPadding: EdgeInsets.symmetric(horizontal: 8),
-                      labelText: 'Mail',
-                      border: InputBorder.none,
-                    ),
-                    keyboardType: TextInputType.emailAddress,
-                  ),
-                ),
-                Divider(
-                  color: Theme.of(context).primaryColorLight,
-                  height: 0,
-                  thickness: 1,
-                ),
-                Padding(
-                  padding: EdgeInsets.all(8),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      Expanded(
-                        child: TextFormField(
-                          validator: (value) {
-                            RegExp pattern = RegExp(r"^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})");
-                            if (_state == AuthState.SignUp && !pattern.hasMatch(value)) {
-                              // return pattern.pattern;
-                              return '- Must be at least 8 characters.\n- Must contain an uppercase and a lowercase.\n- Must contain a number. ';
-                              // return 'Password should be at least 8 characters long and must be containing an uppercase and lowercase character along with a number.';
-                            }
-
-                            if (value.isEmpty) {
-                              return 'Can\'t be blank';
-                            }
-
-                            return null;
-                          },
-                          decoration: InputDecoration(
-                            errorMaxLines: 4,
-                            contentPadding: EdgeInsets.symmetric(horizontal: 8),
-                            labelText: 'Password',
-                            border: InputBorder.none,
-                          ),
-                          keyboardType: TextInputType.emailAddress,
-                          obscureText: !_passwordVisible,
-                          controller: _passwordController,
+                Column(
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.all(8),
+                      child: TextFormField(
+                        onSaved: (value) => _data.mail = value,
+                        validator: (value) {
+                          // W3C e-mail pattern.
+                          RegExp pattern = RegExp(
+                              r"^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$");
+                          if (!pattern.hasMatch(value)) {
+                            print('test');
+                            return 'Please provide a correct e-mail address.';
+                          }
+                          return null;
+                        },
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.symmetric(horizontal: 8),
+                          labelText: 'Mail',
+                          border: InputBorder.none,
                         ),
+                        keyboardType: TextInputType.emailAddress,
                       ),
-                      Padding(
-                        padding: EdgeInsets.only(right: 8),
-                        child: GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              _passwordVisible = !_passwordVisible;
-                            });
-                          },
-                          child: Opacity(
-                            opacity: _passwordVisible ? 1 : 0.3,
-                            child: Icon(
-                              Icons.remove_red_eye,
-                              color: Theme.of(context).primaryColor,
+                    ),
+                    Divider(
+                      color: Theme.of(context).primaryColorLight,
+                      height: 0,
+                      thickness: 1,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(8),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          Expanded(
+                            child: TextFormField(
+                              onSaved: (value) => _data.password = value,
+                              validator: (value) {
+                                RegExp pattern = RegExp(r"^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})");
+                                if (_state == AuthState.SignUp && !pattern.hasMatch(value)) {
+                                  // return pattern.pattern;
+                                  return '- Must be at least 8 characters.\n- Must contain an uppercase and a lowercase.\n- Must contain a number. ';
+                                  // return 'Password should be at least 8 characters long and must be containing an uppercase and lowercase character along with a number.';
+                                }
+
+                                if (value.isEmpty) {
+                                  return 'Can\'t be blank';
+                                }
+
+                                return null;
+                              },
+                              decoration: InputDecoration(
+                                errorMaxLines: 4,
+                                contentPadding: EdgeInsets.symmetric(horizontal: 8),
+                                labelText: 'Password',
+                                border: InputBorder.none,
+                              ),
+                              keyboardType: TextInputType.emailAddress,
+                              obscureText: !_passwordVisible,
+                              controller: _passwordController,
                             ),
                           ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                if (_state == AuthState.SignUp)
-                  Column(
-                    children: <Widget>[
-                      Divider(
-                        color: Theme.of(context).primaryColorLight,
-                        height: 0,
-                        thickness: 1,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8),
-                        child: TextFormField(
-                          validator: (value) {
-                            if (_passwordController.text != value) {
-                              return 'Doesn\'t match.';
-                            }
-                            return null;
-                          },
-                          decoration: InputDecoration(
-                            errorMaxLines: 4,
-                            contentPadding: EdgeInsets.symmetric(horizontal: 8),
-                            labelText: 'Password Repeat',
-                            border: InputBorder.none,
+                          Padding(
+                            padding: EdgeInsets.only(right: 8),
+                            child: GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  _passwordVisible = !_passwordVisible;
+                                });
+                              },
+                              child: Opacity(
+                                opacity: _passwordVisible ? 1 : 0.3,
+                                child: Icon(
+                                  Icons.remove_red_eye,
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                              ),
+                            ),
                           ),
-                          keyboardType: TextInputType.emailAddress,
-                          obscureText: !_passwordVisible,
+                        ],
+                      ),
+                    ),
+                    if (_state == AuthState.SignUp)
+                      Column(
+                        children: <Widget>[
+                          Divider(
+                            color: Theme.of(context).primaryColorLight,
+                            height: 0,
+                            thickness: 1,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8),
+                            child: TextFormField(
+                              validator: (value) {
+                                if (_passwordController.text != value) {
+                                  return 'Doesn\'t match.';
+                                }
+                                return null;
+                              },
+                              decoration: InputDecoration(
+                                errorMaxLines: 4,
+                                contentPadding: EdgeInsets.symmetric(horizontal: 8),
+                                labelText: 'Password Repeat',
+                                border: InputBorder.none,
+                              ),
+                              keyboardType: TextInputType.emailAddress,
+                              obscureText: !_passwordVisible,
+                            ),
+                          ),
+                        ],
+                      ),
+                    Divider(
+                      color: Theme.of(context).primaryColorLight,
+                      height: 0,
+                      thickness: 1,
+                    ),
+                    FlatButton(
+                      child: Text(
+                        '${_state == AuthState.SignIn ? 'Sign In' : 'Sign Up'}',
+                        style: TextStyle(
+                          color: Theme.of(context).primaryColor,
                         ),
                       ),
-                    ],
-                  ),
-                Divider(
-                  color: Theme.of(context).primaryColorLight,
-                  height: 0,
-                  thickness: 1,
+                      onPressed: _action,
+                    ),
+                  ],
                 ),
-                FlatButton(
-                  child: Text(
-                    '${_state == AuthState.SignIn ? 'Sign In' : 'Sign Up'}',
-                    style: TextStyle(
-                      color: Theme.of(context).primaryColor,
+                if (_isLoading)
+                  Positioned.fill(
+                    child: Align(
+                      alignment: Alignment.center,
+                      child: BackdropFilter(
+                        filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
+                        child: CircularProgressIndicator(),
+                      ),
                     ),
                   ),
-                  onPressed: _action,
-                ),
               ],
             ),
           ),
