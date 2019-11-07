@@ -119,10 +119,16 @@ class _AuthenticationFormState extends State<AuthenticationForm> {
                         child: TextFormField(
                           validator: (value) {
                             RegExp pattern = RegExp(r"^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})");
-                            if (!pattern.hasMatch(value)) {
-                              return pattern.toString();
+                            if (_state == AuthState.SignUp && !pattern.hasMatch(value)) {
+                              // return pattern.pattern;
+                              return '- Must be at least 8 characters.\n- Must contain an uppercase and a lowercase.\n- Must contain a number. ';
                               // return 'Password should be at least 8 characters long and must be containing an uppercase and lowercase character along with a number.';
                             }
+
+                            if (value.isEmpty) {
+                              return 'Can\'t be blank';
+                            }
+
                             return null;
                           },
                           decoration: InputDecoration(
