@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:async';
 
 import 'package:course_008/App/models/index.dart';
 import 'package:flutter/foundation.dart';
@@ -72,5 +73,10 @@ class AuthenticationProvider extends ChangeNotifier {
     _userId = null;
     _expireDate = null;
     notifyListeners();
+  }
+
+  void _autoLogOut() {
+    final logOutTime = _expireDate.difference(DateTime.now());
+    Timer(logOutTime, logOut);
   }
 }
