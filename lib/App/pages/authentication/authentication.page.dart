@@ -56,6 +56,12 @@ class _AuthenticationFormState extends State<AuthenticationForm> {
   var _isLoading = false;
   var _data = AuthData();
 
+  @override
+  void dispose() {
+    _passwordController.dispose();
+    super.dispose();
+  }
+
   set isLoading(bool v) {
     setState(() {
       _isLoading = v;
