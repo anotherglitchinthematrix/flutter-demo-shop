@@ -55,6 +55,8 @@ class _EditPageState extends State<EditPage> {
       this.isBusy = true;
       _formKey.currentState.save();
       try {
+        final userId = Provider.of<AuthenticationProvider>(context, listen: false).userId;
+        _editedProduct.creator = userId;
         if (_editedProduct.id.isEmpty) {
           await Provider.of<ProductsProvider>(context, listen: false).addProduct(_editedProduct);
         } else {

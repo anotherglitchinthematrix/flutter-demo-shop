@@ -82,6 +82,9 @@ class AuthenticationProvider extends ChangeNotifier {
     _userId = extractedUserData['userId'];
     _expireDate = expireDate;
 
+    // wait a while to show the splash screen.
+    await Future.delayed(Duration(seconds: 1));
+
     notifyListeners();
 
     _autoLogOut();
@@ -109,14 +112,25 @@ class AuthenticationProvider extends ChangeNotifier {
     );
   }
 
-  void logOut() {
+  Future<void> logOut() async {
     _token = null;
     _userId = null;
     _expireDate = null;
     if (_authTimer != null) {
       _authTimer.cancel();
     }
+
     notifyListeners();
+
+    // authstates could be stored as enums and when logging out we should show a goodbye screen
+    // await Future.delayed(Duration(seconds: 8));
+
+    final storage = await SharedPreferences.getInstance();
+    // delete only some specific data:
+    // storage.remove('userData');
+
+    // purge all prefs.
+    storage.clear();
   }
 
   void _autoLogOut() {

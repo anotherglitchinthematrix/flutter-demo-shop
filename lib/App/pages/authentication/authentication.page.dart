@@ -21,6 +21,19 @@ class AuthenticationPage extends StatelessWidget {
     return FutureBuilder(
       future: Provider.of<AuthenticationProvider>(context, listen: false).tryAutoLogin(),
       builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Scaffold(
+            body: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  CircularProgressIndicator(),
+                  Text('To-Do Splash Screen'),
+                ],
+              ),
+            ),
+          );
+        }
         print('should run once');
         return Scaffold(
           body: Container(
