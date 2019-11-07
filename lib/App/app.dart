@@ -11,8 +11,10 @@ class App extends StatelessWidget {
         ChangeNotifierProvider<AuthenticationProvider>.value(
           value: AuthenticationProvider(),
         ),
-        ChangeNotifierProvider<ProductsProvider>.value(
-          value: ProductsProvider(),
+        ChangeNotifierProxyProvider<AuthenticationProvider, ProductsProvider>(
+          builder: (context, authenticationProvider, previousState) {
+            return ProductsProvider(authenticationProvider.token, previousState.list);
+          },
         ),
         ChangeNotifierProvider<FavoritesProvider>.value(
           value: FavoritesProvider(),

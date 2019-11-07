@@ -5,13 +5,13 @@ import 'package:course_008/App/models/index.dart';
 // import 'package:course_008/App/dummy/index.dart';
 
 class ProductsProvider with ChangeNotifier {
-  ProductsProvider(this.authenticationToken);
+  ProductsProvider(this.authenticationToken, this._products);
 
   String authenticationToken;
 
   List<Product> _products = [];
 
-  List<Product> get list => _products;
+  List<Product> get list => _products ?? [];
 
   Future<void> addProduct(Product product) async {
     final url = 'https://flutter-shop-a3a3e.firebaseio.com/products.json?auth=$authenticationToken';
@@ -63,8 +63,10 @@ class ProductsProvider with ChangeNotifier {
   }
 
   Future<void> fetch() async {
+    final url = 'https://flutter-shop-a3a3e.firebaseio.com/products.json?auth=$authenticationToken';
+
     try {
-      final response = await http.get(insertUrl);
+      final response = await http.get(url);
       final extracted = json.decode(response.body) as Map<String, dynamic>;
       final List<Product> loadedProduct = [];
 
