@@ -93,12 +93,12 @@ class _AuthenticationFormState extends State<AuthenticationForm> {
                           r"^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$");
                       if (!pattern.hasMatch(value)) {
                         print('test');
-                        return 'Please provide a correct e-mail address';
+                        return 'Please provide a correct e-mail address.';
                       }
                       return null;
                     },
                     decoration: InputDecoration(
-                      contentPadding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                      contentPadding: EdgeInsets.symmetric(horizontal: 8),
                       labelText: 'Mail',
                       border: InputBorder.none,
                     ),
@@ -143,7 +143,7 @@ class _AuthenticationFormState extends State<AuthenticationForm> {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.only(right: 8.0),
+                        padding: EdgeInsets.only(right: 8),
                         child: GestureDetector(
                           onTap: () {
                             setState(() {
@@ -175,7 +175,7 @@ class _AuthenticationFormState extends State<AuthenticationForm> {
                         child: TextFormField(
                           validator: (value) {
                             if (_passwordController.text != value) {
-                              return 'Passwords doesn\'t match';
+                              return 'Doesn\'t match.';
                             }
                             return null;
                           },
