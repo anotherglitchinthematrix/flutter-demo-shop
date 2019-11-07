@@ -66,4 +66,11 @@ class AuthenticationProvider extends ChangeNotifier {
       password: password,
     );
   }
+
+  void logOut() {
+    _token = null;
+    _userId = null;
+    _expireDate = null;
+    notifyListeners();
+  }
 }
