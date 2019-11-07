@@ -10,6 +10,7 @@ class AuthenticationProvider extends ChangeNotifier {
   String _token;
   DateTime _expireDate;
   String _userId;
+  Timer _authTimer;
 
   String get token {
     if (_token != null && _expireDate != null && _expireDate.isAfter(DateTime.now())) {
@@ -41,7 +42,7 @@ class AuthenticationProvider extends ChangeNotifier {
       _token = decoded['idToken'];
       _userId = decoded['localId'];
       _expireDate = DateTime.now().add(Duration(seconds: int.parse(decoded['expiresIn'])));
-
+      _autoLogOut();
       notifyListeners();
     } catch (error) {
       throw error;
@@ -72,11 +73,19 @@ class AuthenticationProvider extends ChangeNotifier {
     _token = null;
     _userId = null;
     _expireDate = null;
+    if (_authTimer != null) {
+      _authTimer.cancel();
+    }
     notifyListeners();
   }
 
   void _autoLogOut() {
+    if (_authTimer != null) {
+      _authTimer.cancel();
+    }
+
     final logOutTime = _expireDate.difference(DateTime.now());
-    Timer(logOutTime, logOut);
+    // final logOutTime = Duration(seconds: 10);
+    _authTimer = Timer(logOutTime, logOut);
   }
 }
