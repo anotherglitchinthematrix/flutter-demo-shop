@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-enum AuthState { signIn, signUp }
+enum AuthState { SignIn, SignUp }
 
 class AuthenticationPage extends StatelessWidget {
   static const routeName = 'auth';
@@ -40,12 +40,25 @@ class AuthenticationForm extends StatefulWidget {
 }
 
 class _AuthenticationFormState extends State<AuthenticationForm> {
+  var _formKey = GlobalKey<FormState>();
+  TextEditingController _passwordController = TextEditingController();
+  bool _passwordVisible = false;
+  AuthState _state = AuthState.SignUp;
+
+  void _signIn() {
+    if (!_formKey.currentState.validate()) {
+      return;
+    }
+    print('okey');
+    // _formKey.currentState.save();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
         Container(
-          padding: EdgeInsets.all(8),
+          // padding: EdgeInsets.all(8),
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(6),
@@ -58,33 +71,117 @@ class _AuthenticationFormState extends State<AuthenticationForm> {
             ],
           ),
           child: Form(
+            key: _formKey,
             child: Column(
               children: <Widget>[
-                TextFormField(
-                  decoration: InputDecoration(
-                    contentPadding: EdgeInsets.all(8),
-                    labelText: 'Mail',
-                    border: InputBorder.none,
+                Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: TextFormField(
+                    validator: (value) {
+                      // W3C e-mail pattern.
+                      RegExp pattern = RegExp(
+                          r"^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$");
+                      if (!pattern.hasMatch(value)) {
+                        print('test');
+                        return 'Please provide a correct e-mail address';
+                      }
+                      return null;
+                    },
+                    decoration: InputDecoration(
+                      contentPadding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                      labelText: 'Mail',
+                      border: InputBorder.none,
+                    ),
+                    keyboardType: TextInputType.emailAddress,
                   ),
-                  keyboardType: TextInputType.emailAddress,
                 ),
                 Divider(
                   color: Theme.of(context).primaryColorLight,
                   height: 0,
                   thickness: 1,
                 ),
-                TextFormField(
-                  decoration: InputDecoration(
-                    contentPadding: EdgeInsets.all(8),
-                    labelText: 'Password',
-                    border: InputBorder.none,
+                Padding(
+                  padding: EdgeInsets.all(8),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      Expanded(
+                        child: TextFormField(
+                          validator: (value) {
+                            RegExp pattern = RegExp(r"^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})");
+                            if (!pattern.hasMatch(value)) {
+                              return pattern.toString();
+                              return 'Password should be at least 8 characters long and must be containing an uppercase and lowercase character along with a number.';
+                            }
+                            return null;
+                          },
+                          decoration: InputDecoration(
+                            errorMaxLines: 4,
+                            contentPadding: EdgeInsets.symmetric(horizontal: 8),
+                            labelText: 'Password',
+                            border: InputBorder.none,
+                          ),
+                          keyboardType: TextInputType.emailAddress,
+                          obscureText: !_passwordVisible,
+                          controller: _passwordController,
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            _passwordVisible = !_passwordVisible;
+                          });
+                        },
+                        child: Icon(
+                          Icons.remove_red_eye,
+                          color: _passwordVisible ? Theme.of(context).errorColor : Theme.of(context).primaryColor,
+                        ),
+                      ),
+                    ],
                   ),
-                  keyboardType: TextInputType.emailAddress,
-                  obscureText: true,
+                ),
+                if (_state == AuthState.SignUp)
+                  Column(
+                    children: <Widget>[
+                      Divider(
+                        color: Theme.of(context).primaryColorLight,
+                        height: 0,
+                        thickness: 1,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8),
+                        child: TextFormField(
+                          validator: (value) {
+                            if (_passwordController.text != value) {
+                              return 'Passwords doesn\'t match';
+                            }
+                            return null;
+                          },
+                          decoration: InputDecoration(
+                            errorMaxLines: 4,
+                            contentPadding: EdgeInsets.symmetric(horizontal: 8),
+                            labelText: 'Password Repeat',
+                            border: InputBorder.none,
+                          ),
+                          keyboardType: TextInputType.emailAddress,
+                          obscureText: !_passwordVisible,
+                        ),
+                      ),
+                    ],
+                  ),
+                Divider(
+                  color: Theme.of(context).primaryColorLight,
+                  height: 0,
+                  thickness: 1,
                 ),
                 FlatButton(
-                  child: Text('Sign-in'),
-                  onPressed: () {},
+                  child: Text(
+                    '${_state == AuthState.SignIn ? 'Sign In' : 'Sign Up'}',
+                    style: TextStyle(
+                      color: Theme.of(context).primaryColor,
+                    ),
+                  ),
+                  onPressed: _signIn,
                 ),
               ],
             ),
@@ -92,13 +189,24 @@ class _AuthenticationFormState extends State<AuthenticationForm> {
         ),
         FlatButton(
           child: Text(
-            'Sign-up Instead',
+            '${_state == AuthState.SignIn ? 'Sign Up' : 'Sign In'} Instead',
             style: TextStyle(
               color: Theme.of(context).primaryColorLight,
               fontSize: 12,
             ),
           ),
-          onPressed: () {},
+          onPressed: () {
+            setState(() {
+              switch (_state) {
+                case AuthState.SignIn:
+                  _state = AuthState.SignUp;
+                  break;
+                case AuthState.SignUp:
+                  _state = AuthState.SignIn;
+                  break;
+              }
+            });
+          },
         ),
       ],
     );
