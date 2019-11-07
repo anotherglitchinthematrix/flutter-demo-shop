@@ -41,9 +41,9 @@ class AuthenticationForm extends StatefulWidget {
 
 class _AuthenticationFormState extends State<AuthenticationForm> {
   var _formKey = GlobalKey<FormState>();
-  TextEditingController _passwordController = TextEditingController();
-  bool _passwordVisible = false;
-  AuthState _state = AuthState.SignUp;
+  var _passwordController = TextEditingController();
+  var _passwordVisible = false;
+  var _state = AuthState.SignIn;
 
   void _signIn() {
     if (!_formKey.currentState.validate()) {
