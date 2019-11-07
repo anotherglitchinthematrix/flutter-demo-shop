@@ -33,6 +33,9 @@ class AppDrawer extends StatelessWidget {
             onTap: () {
               // should close the drawer before hard switch between pages, other wise will throw some error.
               Navigator.of(context).pop();
+              // this not needed but suggested by Maximilian.
+              // this triggers authentication.page's future builder twice so I'm not fan of that.
+              Navigator.of(context).pushReplacementNamed('/');
               Provider.of<AuthenticationProvider>(context, listen: false).logOut();
             },
           ),
