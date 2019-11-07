@@ -24,19 +24,23 @@ class App extends StatelessWidget {
           value: OrderProvider(),
         ),
       ],
-      child: MaterialApp(
-        theme: ThemeData(
-          fontFamily: 'Inter',
-          primarySwatch: Colors.blueGrey,
-        ),
-        home: AuthenticationPage(),
-        routes: {
-          ProductsPage.routeName: (context) => ProductsPage(),
-          ProductPage.routeName: (context) => ProductPage(),
-          CartPage.routeName: (context) => CartPage(),
-          OrderPage.routeName: (context) => OrderPage(),
-          ManagePage.routeName: (context) => ManagePage(),
-          EditPage.routeName: (context) => EditPage(),
+      child: Consumer<AuthenticationProvider>(
+        builder: (context, auth, _child) {
+          return MaterialApp(
+            theme: ThemeData(
+              fontFamily: 'Inter',
+              primarySwatch: Colors.blueGrey,
+            ),
+            home: auth.isAuthenticated ? ProductsPage() : AuthenticationPage(),
+            routes: {
+              ProductsPage.routeName: (context) => ProductsPage(),
+              ProductPage.routeName: (context) => ProductPage(),
+              CartPage.routeName: (context) => CartPage(),
+              OrderPage.routeName: (context) => OrderPage(),
+              ManagePage.routeName: (context) => ManagePage(),
+              EditPage.routeName: (context) => EditPage(),
+            },
+          );
         },
       ),
     );
