@@ -16,8 +16,8 @@ class App extends StatelessWidget {
             return ProductsProvider(authenticationProvider.token);
           },
         ),
-        ChangeNotifierProvider<FavoritesProvider>.value(
-          value: FavoritesProvider(),
+        ChangeNotifierProxyProvider<AuthenticationProvider, FavoritesProvider>(
+          builder: (context, auth, pFavorite) => FavoritesProvider(auth.token),
         ),
         ChangeNotifierProvider<CartProvider>.value(
           value: CartProvider(),
