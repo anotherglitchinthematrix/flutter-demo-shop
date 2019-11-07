@@ -7,13 +7,14 @@ class Product {
   String description;
   double price;
   String imageURL;
-
+  String creator;
   Product({
     @required this.id,
     @required this.title,
     @required this.description,
     @required this.price,
     @required this.imageURL,
+    @required this.creator,
   });
 
   String get toJson {
@@ -22,6 +23,7 @@ class Product {
       'description': this.description,
       'price': this.price,
       'imageURL': this.imageURL,
+      'creator': this.creator,
     });
   }
 

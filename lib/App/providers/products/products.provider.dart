@@ -5,9 +5,10 @@ import 'package:course_008/App/models/index.dart';
 // import 'package:course_008/App/dummy/index.dart';
 
 class ProductsProvider with ChangeNotifier {
-  ProductsProvider(this.authenticationToken);
+  ProductsProvider(this.authenticationToken, this.userId);
 
   String authenticationToken;
+  String userId;
 
   List<Product> _products = [];
 
@@ -62,9 +63,10 @@ class ProductsProvider with ChangeNotifier {
     }
   }
 
-  Future<void> fetch() async {
-    final url = 'https://flutter-shop-a3a3e.firebaseio.com/products.json?auth=$authenticationToken';
-
+  Future<void> fetch([bool filterForUser = false]) async {
+    final url = !filterForUser
+        ? 'https://flutter-shop-a3a3e.firebaseio.com/products.json?auth=$authenticationToken'
+        : 'https://flutter-shop-a3a3e.firebaseio.com/products.json?auth=$authenticationToken&orderBy="creator"&equalTo="$userId"';
     try {
       final response = await http.get(url);
       final extracted = json.decode(response.body) as Map<String, dynamic>;
@@ -82,6 +84,7 @@ class ProductsProvider with ChangeNotifier {
             description: value['description'],
             price: value['price'],
             imageURL: value['imageURL'],
+            creator: value['creator'],
           ));
         });
       }

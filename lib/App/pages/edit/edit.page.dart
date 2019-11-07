@@ -46,6 +46,7 @@ class _EditPageState extends State<EditPage> {
     description: '',
     imageURL: '',
     price: 0,
+    creator: '',
   );
 
   void _saveForm() async {

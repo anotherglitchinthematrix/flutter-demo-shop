@@ -63,6 +63,7 @@ class OrderProvider with ChangeNotifier {
                 description: product['description'],
                 price: product['price'],
                 imageURL: product['imageURL'],
+                creator: product['creator'],
               ),
               quantity: quantity,
             );
