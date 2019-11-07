@@ -45,12 +45,22 @@ class _AuthenticationFormState extends State<AuthenticationForm> {
   var _passwordVisible = false;
   var _state = AuthState.SignIn;
 
-  void _signIn() {
+  void _action() {
     if (!_formKey.currentState.validate()) {
       return;
     }
-    print('okey');
-    // _formKey.currentState.save();
+
+    // trigger the onSave methods of the TextFormFields
+    _formKey.currentState.save();
+
+    switch (_state) {
+      case AuthState.SignIn:
+        print('Sign in action');
+        break;
+      case AuthState.SignUp:
+        print('Sign up action');
+        break;
+    }
   }
 
   @override
@@ -111,7 +121,7 @@ class _AuthenticationFormState extends State<AuthenticationForm> {
                             RegExp pattern = RegExp(r"^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})");
                             if (!pattern.hasMatch(value)) {
                               return pattern.toString();
-                              return 'Password should be at least 8 characters long and must be containing an uppercase and lowercase character along with a number.';
+                              // return 'Password should be at least 8 characters long and must be containing an uppercase and lowercase character along with a number.';
                             }
                             return null;
                           },
@@ -126,15 +136,21 @@ class _AuthenticationFormState extends State<AuthenticationForm> {
                           controller: _passwordController,
                         ),
                       ),
-                      GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            _passwordVisible = !_passwordVisible;
-                          });
-                        },
-                        child: Icon(
-                          Icons.remove_red_eye,
-                          color: _passwordVisible ? Theme.of(context).errorColor : Theme.of(context).primaryColor,
+                      Padding(
+                        padding: EdgeInsets.only(right: 8.0),
+                        child: GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              _passwordVisible = !_passwordVisible;
+                            });
+                          },
+                          child: Opacity(
+                            opacity: _passwordVisible ? 1 : 0.3,
+                            child: Icon(
+                              Icons.remove_red_eye,
+                              color: Theme.of(context).primaryColor,
+                            ),
+                          ),
                         ),
                       ),
                     ],
@@ -181,7 +197,7 @@ class _AuthenticationFormState extends State<AuthenticationForm> {
                       color: Theme.of(context).primaryColor,
                     ),
                   ),
-                  onPressed: _signIn,
+                  onPressed: _action,
                 ),
               ],
             ),
