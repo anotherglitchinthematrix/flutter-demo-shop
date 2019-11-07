@@ -5,9 +5,9 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/widgets.dart';
 
 class FavoritesProvider with ChangeNotifier {
-  FavoritesProvider(this.authToken);
-
+  FavoritesProvider(this.authToken, this.userID);
   String authToken;
+  String userID;
 
   final Map<String, String> _favorites = {};
 
@@ -29,7 +29,7 @@ class FavoritesProvider with ChangeNotifier {
 
   Future<void> fetch() async {
     try {
-      final url = 'https://flutter-shop-a3a3e.firebaseio.com/favorites.json?auth=$authToken';
+      final url = 'https://flutter-shop-a3a3e.firebaseio.com/favorites/$userID.json?auth=$authToken';
       var response = await http.get(url);
 
       var favorites = json.decode(response.body) as Map<String, dynamic>;
@@ -46,7 +46,7 @@ class FavoritesProvider with ChangeNotifier {
   }
 
   void _add(String id) {
-    final url = 'https://flutter-shop-a3a3e.firebaseio.com/favorites.json?auth=$authToken';
+    final url = 'https://flutter-shop-a3a3e.firebaseio.com/favorites/$userID.json?auth=$authToken';
 
     // optimistic update.
     var entry = _favorites.entries.firstWhere((f) => f.value == id, orElse: () {
@@ -76,8 +76,8 @@ class FavoritesProvider with ChangeNotifier {
     var entry = _favorites.entries.firstWhere((e) => e.value == id);
     _favorites.remove(entry.key);
 
-    // print(entry);
-    final url = "https://flutter-shop-a3a3e.firebaseio.com/favorites/${entry.key}.json?auth=$authToken";
+    print(entry);
+    final url = "https://flutter-shop-a3a3e.firebaseio.com/favorites/$userID/${entry.key}.json?auth=$authToken";
 
     http.delete(url).then((response) {
       if (response.statusCode >= 400) {

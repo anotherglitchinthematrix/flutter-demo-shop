@@ -8,6 +8,8 @@ class ProductsPage extends StatelessWidget {
   static const routeName = 'products';
   @override
   Widget build(BuildContext context) {
+    // var auth = Provider.of<AuthenticationProvider>(context, listen: false);
+    // Provider.of<FavoritesProvider>(context, listen: false).fetch(auth.token, auth.userId);
     Provider.of<FavoritesProvider>(context, listen: false).fetch();
 
     return Scaffold(

@@ -17,6 +17,7 @@ class AuthenticationProvider extends ChangeNotifier {
     return null;
   }
 
+  String get userId => _userId;
   bool get isAuthenticated => token != null;
 
   Future<void> _authenticate(String url, {String mail, String password}) async {
