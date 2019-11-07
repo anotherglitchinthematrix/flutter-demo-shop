@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:async';
 
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:course_008/App/models/index.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
@@ -43,10 +44,49 @@ class AuthenticationProvider extends ChangeNotifier {
       _userId = decoded['localId'];
       _expireDate = DateTime.now().add(Duration(seconds: int.parse(decoded['expiresIn'])));
       _autoLogOut();
+
       notifyListeners();
+
+      // after succesfull login save the credentials to the shared pereferences
+      final storage = await SharedPreferences.getInstance();
+      final userData = json.encode({
+        'token': _token,
+        'userId': _userId,
+        'expireDate': _expireDate.toIso8601String(),
+      });
+
+      // don't await.
+      storage.setString('userData', userData);
     } catch (error) {
       throw error;
     }
+  }
+
+  Future<bool> tryAutoLogin() async {
+    final storage = await SharedPreferences.getInstance();
+
+    if (!storage.containsKey('userData')) {
+      return false;
+    }
+
+    final extractedUserData = json.decode(storage.getString('userData'));
+
+    final expireDate = DateTime.parse(extractedUserData['expireDate']);
+
+    // token is expired.
+    if (expireDate.isBefore(DateTime.now())) {
+      return false;
+    }
+
+    _token = extractedUserData['token'];
+    _userId = extractedUserData['userId'];
+    _expireDate = expireDate;
+
+    notifyListeners();
+
+    _autoLogOut();
+
+    return true;
   }
 
   Future<void> signUp(String mail, String password) async {

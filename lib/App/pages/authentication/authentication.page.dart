@@ -18,29 +18,35 @@ class AuthenticationPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        color: Theme.of(context).primaryColor,
-        width: double.infinity,
-        height: double.infinity,
-        child: Center(
-          child: SingleChildScrollView(
-            child: Container(
-              width: double.infinity,
-              margin: EdgeInsets.all(32),
-              padding: EdgeInsets.all(8),
-              child: Column(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  AuthenticationForm(),
-                ],
+    return FutureBuilder(
+      future: Provider.of<AuthenticationProvider>(context, listen: false).tryAutoLogin(),
+      builder: (context, snapshot) {
+        print('should run once');
+        return Scaffold(
+          body: Container(
+            color: Theme.of(context).primaryColor,
+            width: double.infinity,
+            height: double.infinity,
+            child: Center(
+              child: SingleChildScrollView(
+                child: Container(
+                  width: double.infinity,
+                  margin: EdgeInsets.all(32),
+                  padding: EdgeInsets.all(8),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      AuthenticationForm(),
+                    ],
+                  ),
+                ),
               ),
             ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }
