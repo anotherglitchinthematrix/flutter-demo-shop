@@ -5,7 +5,7 @@ import 'package:course_008/App/models/index.dart';
 // import 'package:course_008/App/dummy/index.dart';
 
 class ProductsProvider with ChangeNotifier {
-  ProductsProvider(this.authenticationToken, this._products);
+  ProductsProvider(this.authenticationToken);
 
   String authenticationToken;
 
