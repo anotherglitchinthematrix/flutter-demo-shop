@@ -12,6 +12,16 @@ class AppDrawer extends StatelessWidget {
           SizedBox(
             height: 128,
           ),
+          // With Custom animation.
+          // ListTile(
+          //   leading: Icon(Icons.grid_on),
+          //   title: Text('Products'),
+          //   onTap: () => Navigator.of(context).pushReplacement(
+          //     CustomRoute(
+          //       builder: (ctx) => ProductsPage(),
+          //     ),
+          //   ),
+          // ),
           ListTile(
             leading: Icon(Icons.grid_on),
             title: Text('Products'),
