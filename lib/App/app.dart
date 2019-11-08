@@ -1,3 +1,4 @@
+import 'package:course_008/App/helpers/custom.route.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:course_008/App/pages/index.dart';
@@ -32,6 +33,10 @@ class App extends StatelessWidget {
             theme: ThemeData(
               fontFamily: 'Inter',
               primarySwatch: Colors.blueGrey,
+              pageTransitionsTheme: PageTransitionsTheme(builders: {
+                TargetPlatform.android: CustomRouteTransitionBuilder(),
+                TargetPlatform.iOS: CustomRouteTransitionBuilder(),
+              }),
             ),
             home: auth.isAuthenticated ? ProductsPage() : AuthenticationPage(),
             routes: {
