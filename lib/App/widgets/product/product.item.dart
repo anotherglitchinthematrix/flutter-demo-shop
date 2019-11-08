@@ -151,11 +151,14 @@ class ProductGridItem extends StatelessWidget {
             );
           },
           child: GridTile(
-            child: FadeInImage(
-              placeholder: AssetImage('lib/App/assets/images/placeholder.png'),
-              fadeInCurve: Curves.easeIn,
-              image: NetworkImage(product.imageURL),
-              fit: BoxFit.cover,
+            child: Hero(
+              tag: product.id,
+              child: FadeInImage(
+                placeholder: AssetImage('lib/App/assets/images/placeholder.png'),
+                fadeInCurve: Curves.easeIn,
+                image: NetworkImage(product.imageURL),
+                fit: BoxFit.cover,
+              ),
             ),
             header: Align(
               alignment: Alignment.topRight,

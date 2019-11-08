@@ -19,6 +19,7 @@ class ProductPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final ProductPageArgument argument = ModalRoute.of(context).settings.arguments;
     final Product product = argument.product;
+    final maxSize = MediaQuery.of(context).size.height * 0.6;
 
     final favorites = Provider.of<FavoritesProvider>(context);
 
@@ -40,7 +41,7 @@ class ProductPage extends StatelessWidget {
               Container(
                 margin: EdgeInsets.only(bottom: 8),
                 width: double.infinity,
-                height: 256,
+                height: maxSize,
                 decoration: BoxDecoration(
                   boxShadow: [
                     BoxShadow(
@@ -58,9 +59,12 @@ class ProductPage extends StatelessWidget {
                   borderRadius: BorderRadius.vertical(
                     bottom: Radius.circular(8),
                   ),
-                  child: Image.network(
-                    product.imageURL,
-                    fit: BoxFit.cover,
+                  child: Hero(
+                    tag: product.id,
+                    child: Image.network(
+                      product.imageURL,
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
               ),
