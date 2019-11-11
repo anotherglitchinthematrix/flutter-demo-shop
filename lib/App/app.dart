@@ -13,8 +13,8 @@ class App extends StatelessWidget {
           value: AuthenticationProvider(),
         ),
         ChangeNotifierProxyProvider<AuthenticationProvider, ProductsProvider>(
-          builder: (context, authenticationProvider, _) {
-            return ProductsProvider(authenticationProvider.token, authenticationProvider.userId);
+          builder: (context, authenticationProvider, old) {
+            return ProductsProvider(authenticationProvider.token, authenticationProvider.userId, list: old?.list);
           },
         ),
         ChangeNotifierProxyProvider<AuthenticationProvider, FavoritesProvider>(

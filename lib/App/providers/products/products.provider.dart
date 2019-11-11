@@ -5,7 +5,9 @@ import 'package:course_008/App/models/index.dart';
 // import 'package:course_008/App/dummy/index.dart';
 
 class ProductsProvider with ChangeNotifier {
-  ProductsProvider(this.authenticationToken, this.userId);
+  ProductsProvider(this.authenticationToken, this.userId, {List<Product> list}) {
+    _products = list ?? [];
+  }
 
   String authenticationToken;
   String userId;
@@ -63,7 +65,13 @@ class ProductsProvider with ChangeNotifier {
     }
   }
 
-  Future<void> fetch([bool filterForUser = false]) async {
+  Future<void> fetch({bool force = false, bool filterForUser = false}) async {
+    // if not forced and list is not empty, prevent the event.
+    if (!force && this.list.isNotEmpty) {
+      print('once upon a time');
+      return;
+    }
+
     final url = !filterForUser
         ? 'https://flutter-shop-a3a3e.firebaseio.com/products.json?auth=$authenticationToken'
         : 'https://flutter-shop-a3a3e.firebaseio.com/products.json?auth=$authenticationToken&orderBy="creator"&equalTo="$userId"';

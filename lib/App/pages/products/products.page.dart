@@ -38,7 +38,10 @@ class ProductsPage extends StatelessWidget {
                   child: CircularProgressIndicator(),
                 );
               } else {
-                return ProductsGrid();
+                return RefreshIndicator(
+                  onRefresh: () => Provider.of<ProductsProvider>(context).fetch(force: true),
+                  child: ProductsGrid(),
+                );
               }
             },
           ),

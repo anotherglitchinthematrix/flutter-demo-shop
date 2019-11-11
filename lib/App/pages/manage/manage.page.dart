@@ -22,7 +22,7 @@ class ManagePage extends StatelessWidget {
       ),
       drawer: AppDrawer(),
       body: FutureBuilder(
-          future: Provider.of<ProductsProvider>(context, listen: false).fetch(true),
+          future: Provider.of<ProductsProvider>(context, listen: false).fetch(force: true, filterForUser: true),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return Center(child: CircularProgressIndicator());
@@ -30,7 +30,7 @@ class ManagePage extends StatelessWidget {
             print('future builder should only trigger once.');
             return RefreshIndicator(
               onRefresh: () {
-                return Provider.of<ProductsProvider>(context, listen: false).fetch(true);
+                return Provider.of<ProductsProvider>(context, listen: false).fetch(force: true, filterForUser: true);
               },
               child: Consumer<ProductsProvider>(
                 builder: (context, products, _) => ManageList(products.list),
