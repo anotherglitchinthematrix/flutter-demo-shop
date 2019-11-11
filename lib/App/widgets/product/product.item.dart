@@ -7,8 +7,9 @@ import 'package:course_008/App/providers/index.dart';
 import 'package:course_008/App/pages/index.dart';
 
 class ProductGridItem extends StatelessWidget {
-  ProductGridItem(this.product);
-
+  ProductGridItem(this.product, {this.longPress});
+  final Function(BuildContext context, {Product product, CartProvider cart})
+      longPress;
   final Product product;
 
   @override
@@ -32,116 +33,11 @@ class ProductGridItem extends StatelessWidget {
       child: ClipRRect(
         borderRadius: radius,
         child: GestureDetector(
-          onLongPress: () {
-            showDialog(
-                context: context,
-                builder: (context) {
-                  return BackdropFilter(
-                    filter: ui.ImageFilter.blur(sigmaX: 2, sigmaY: 2),
-                    child: Dialog(
-                      backgroundColor: Colors.transparent,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(12),
-                        child: Container(
-                          height: 480,
-                          width: double.infinity,
-                          child: Stack(
-                            // alignment: Alignment.bottomCenter,
-                            children: <Widget>[
-                              Container(
-                                width: double.infinity,
-                                height: double.infinity,
-                                child: Image.network(
-                                  product.imageURL,
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                              Align(
-                                alignment: Alignment.topRight,
-                                child: Consumer<FavoritesProvider>(
-                                  builder: (_, favorites, child) => IconButton(
-                                    splashColor: Colors.transparent,
-                                    highlightColor: Colors.transparent,
-                                    color: Colors.pink,
-                                    iconSize: 36,
-                                    icon:
-                                        Icon(favorites.isFavorite(product.id) ? Icons.favorite : Icons.favorite_border),
-                                    onPressed: () => favorites.toggle(product.id),
-                                  ),
-                                ),
-                              ),
-                              Align(
-                                alignment: Alignment.bottomCenter,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8),
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(8),
-                                    child: BackdropFilter(
-                                      filter: ui.ImageFilter.blur(sigmaX: 8, sigmaY: 8),
-                                      child: Container(
-                                        width: double.infinity,
-                                        color: Colors.black.withAlpha(128),
-                                        child: Padding(
-                                          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
-                                          child: Container(
-                                            child: Row(
-                                              children: [
-                                                Expanded(
-                                                  child: Column(
-                                                    mainAxisSize: MainAxisSize.min,
-                                                    mainAxisAlignment: MainAxisAlignment.center,
-                                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                                    children: <Widget>[
-                                                      Text(
-                                                        product.title,
-                                                        style: TextStyle(
-                                                          fontSize: 18,
-                                                          fontWeight: FontWeight.w500,
-                                                          color: Theme.of(context).primaryColorLight,
-                                                        ),
-                                                      ),
-                                                      Text(
-                                                        product.description,
-                                                        style: TextStyle(
-                                                          fontSize: 14,
-                                                          color: Theme.of(context).primaryColorLight,
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                                FlatButton.icon(
-                                                  highlightColor: Theme.of(context).primaryColorLight.withAlpha(12),
-                                                  splashColor: Theme.of(context).primaryColorLight.withAlpha(24),
-                                                  icon: Icon(
-                                                    Icons.add_shopping_cart,
-                                                    color: Theme.of(context).primaryColorLight,
-                                                  ),
-                                                  label: Text('Add',
-                                                      style: TextStyle(
-                                                        color: Theme.of(context).primaryColorLight,
-                                                      )),
-                                                  onPressed: () {
-                                                    cart.add(product);
-                                                  },
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  );
-                });
-          },
+          onLongPress: () => longPress(
+            context,
+            product: product,
+            cart: cart,
+          ),
           onTap: () {
             Navigator.of(context).pushNamed(
               ProductPage.routeName,
@@ -154,7 +50,8 @@ class ProductGridItem extends StatelessWidget {
             child: Hero(
               tag: product.id,
               child: FadeInImage(
-                placeholder: AssetImage('lib/App/assets/images/placeholder.png'),
+                placeholder:
+                    AssetImage('lib/App/assets/images/placeholder.png'),
                 fadeInCurve: Curves.easeIn,
                 image: NetworkImage(product.imageURL),
                 fit: BoxFit.cover,
@@ -167,7 +64,9 @@ class ProductGridItem extends StatelessWidget {
                   splashColor: Colors.transparent,
                   highlightColor: Colors.transparent,
                   color: Colors.pink,
-                  icon: Icon(favorites.isFavorite(product.id) ? Icons.favorite : Icons.favorite_border),
+                  icon: Icon(favorites.isFavorite(product.id)
+                      ? Icons.favorite
+                      : Icons.favorite_border),
                   onPressed: () => favorites.toggle(product.id),
                 ),
               ),
@@ -209,14 +108,17 @@ class ProductGridItem extends StatelessWidget {
                               Scaffold.of(context).hideCurrentSnackBar();
                               Scaffold.of(context).showSnackBar(
                                 SnackBar(
-                                  content: Text('${product.title} Has been added to cart!'),
+                                  content: Text(
+                                      '${product.title} Has been added to cart!'),
                                   duration: Duration(milliseconds: 800),
                                   behavior: SnackBarBehavior.floating,
-                                  backgroundColor: Theme.of(context).primaryColorDark,
+                                  backgroundColor:
+                                      Theme.of(context).primaryColorDark,
                                   action: SnackBarAction(
                                     label: 'Undo',
                                     onPressed: () => cart.removeSingle(product),
-                                    textColor: Theme.of(context).primaryColorLight,
+                                    textColor:
+                                        Theme.of(context).primaryColorLight,
                                   ),
                                 ),
                               );
